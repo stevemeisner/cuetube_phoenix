@@ -75,15 +75,23 @@
     color: #64748b;
     cursor: pointer;
     transition: all 0.2s;
+    padding: 0;
+    outline: none;
 
-    &:hover {
-      color: $color-text;
+    svg {
+      pointer-events: none;
     }
 
     &.active {
       background: white;
       color: $color-primary;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      cursor: default;
+    }
+
+    &:hover:not(.active) {
+      color: $color-text;
+      background: rgba(255, 255, 255, 0.5);
     }
   }
 }
@@ -163,7 +171,7 @@
     position: absolute;
     top: 0.75rem;
     left: 0.75rem;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
@@ -212,7 +220,8 @@
       color: #64748b;
     }
 
-    textarea, input[type="text"] {
+    textarea,
+    input[type='text'] {
       width: 100%;
       padding: 0.75rem;
       background: #f8fafc;
@@ -254,4 +263,3 @@
     font-weight: 600;
   }
 }
-

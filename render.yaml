@@ -3,6 +3,7 @@ services:
     name: cuetube
     runtime: docker
     plan: free # or your preferred plan
+    preDeployCommand: /app/bin/migrate
     envVars:
       - key: PHX_SERVER
         value: 'true'
