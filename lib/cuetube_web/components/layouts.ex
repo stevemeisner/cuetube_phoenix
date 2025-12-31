@@ -37,10 +37,8 @@ defmodule CuetubeWeb.Layouts do
   def app(assigns) do
     ~H"""
     <div class="app-main-wrapper">
-      <div class="flash-container container relative">
-        <div class="absolute top-0 left-0 right-0 z-50">
-          <.flash_group flash={@flash} />
-        </div>
+      <div class="flash-container container">
+        <.flash_group flash={@flash} />
       </div>
       {render_slot(@inner_block)}
     </div>

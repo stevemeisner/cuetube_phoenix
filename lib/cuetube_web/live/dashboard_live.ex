@@ -24,7 +24,7 @@ defmodule CuetubeWeb.DashboardLive do
           <h1 class="section-title">My Playlists</h1>
           <div class="header-actions">
             <.link navigate={~p"/playlists/new"} class="btn btn-primary">
-              <.icon name="hero-plus" class="w-4 h-4 mr-1" /> Add Playlist
+              Add Playlist
             </.link>
           </div>
         </header>
@@ -32,9 +32,6 @@ defmodule CuetubeWeb.DashboardLive do
         <div class="dashboard-content">
           <%= if @playlists == [] do %>
             <div class="empty-dashboard">
-              <div class="empty-icon-wrapper">
-                <.icon name="hero-queue-list" class="empty-icon" />
-              </div>
               <h2 class="empty-title">No playlists yet</h2>
               <p class="empty-text">
                 Start by importing a YouTube playlist to add your own educational context and notes.
@@ -51,7 +48,6 @@ defmodule CuetubeWeb.DashboardLive do
                     <h3 class="card-title">{playlist.title}</h3>
                     <p class="card-desc">{playlist.description}</p>
                     <div class="card-meta">
-                      <.icon name="hero-calendar" class="w-3 h-3 mr-1" />
                       <span>Synced {Calendar.strftime(playlist.last_synced_at, "%b %d, %Y")}</span>
                     </div>
                   </div>
