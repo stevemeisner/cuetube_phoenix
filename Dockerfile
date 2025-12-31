@@ -1,8 +1,8 @@
 # Find eligible builder and runner images on Docker Hub. We use Ubuntu/Debian
 # instead of Alpine to avoid musl libc issues.
-ARG ELIXIR_VERSION=1.19.4
-ARG OTP_VERSION=28.3
-ARG DEBIAN_VERSION=bullseye-20241202-slim
+ARG ELIXIR_VERSION=1.18.4
+ARG OTP_VERSION=26.0.1
+ARG DEBIAN_VERSION=bookworm-20251229-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
