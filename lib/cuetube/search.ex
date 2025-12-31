@@ -144,8 +144,14 @@ defmodule Cuetube.Search do
         from(ps in Cuetube.Library.PlaylistSearch,
           join: p in assoc(ps, :playlist),
           left_join: u in assoc(p, :user),
-          where: fragment("? @@ websearch_to_tsquery('simple', ?) OR ? @@ to_tsquery('simple', ?)",
-            ps.search_vector, ^text, ps.search_vector, ^prefix_q),
+          where:
+            fragment(
+              "? @@ websearch_to_tsquery('simple', ?) OR ? @@ to_tsquery('simple', ?)",
+              ps.search_vector,
+              ^text,
+              ps.search_vector,
+              ^prefix_q
+            ),
           limit: 6,
           select: %{
             type: :playlist,

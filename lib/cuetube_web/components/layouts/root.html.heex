@@ -7,6 +7,36 @@
     <.live_title suffix=" · Cuetube">
       {assigns[:page_title] || "Augmented YouTube Playlists"}
     </.live_title>
+
+    <%!-- Favicon and App Icons --%>
+    <link rel="icon" href={~p"/favicon.ico"} sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href={~p"/images/logo.svg"} />
+    <link rel="apple-touch-icon" href={~p"/images/logo.svg"} />
+    <link rel="manifest" href={~p"/site.webmanifest"} />
+    <meta name="theme-color" content="#ffffff" />
+
+    <%!-- Social Meta Tags (Rich Links) --%>
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content={assigns[:page_title] || "Cuetube · Augmented YouTube Playlists"}
+    />
+    <meta
+      property="og:description"
+      content="Enhance your YouTube experience with augmented playlists and advanced curation tools."
+    />
+    <meta property="og:image" content={~p"/images/logo.svg"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content={assigns[:page_title] || "Cuetube · Augmented YouTube Playlists"}
+    />
+    <meta
+      name="twitter:description"
+      content="Enhance your YouTube experience with augmented playlists and advanced curation tools."
+    />
+    <meta name="twitter:image" content={~p"/images/logo.svg"} />
+
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

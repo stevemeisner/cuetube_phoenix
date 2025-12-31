@@ -9,10 +9,10 @@ defmodule CuetubeWeb.DashboardLive do
     playlists = Library.list_user_playlists(user_id)
 
     {:ok,
-      assign(socket,
-        playlists: playlists,
-        page_title: "My Dashboard"
-      )}
+     assign(socket,
+       playlists: playlists,
+       page_title: "My Dashboard"
+     )}
   end
 
   @impl true
@@ -55,7 +55,10 @@ defmodule CuetubeWeb.DashboardLive do
                     <.link navigate={~p"/p/#{playlist.slug}"} class="btn btn-sm btn-outline">
                       View Public
                     </.link>
-                    <.link navigate={~p"/playlists/#{playlist.id}/edit"} class="btn btn-sm btn-primary">
+                    <.link
+                      navigate={~p"/playlists/#{playlist.id}/edit"}
+                      class="btn btn-sm btn-primary"
+                    >
                       Edit Curation
                     </.link>
                   </div>

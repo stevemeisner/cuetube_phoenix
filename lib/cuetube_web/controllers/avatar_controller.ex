@@ -67,7 +67,9 @@ defmodule CuetubeWeb.AvatarController do
 
   defp is_allowed_avatar_url(url) do
     uri = URI.parse(url)
+
     uri.scheme == "https" &&
-      (uri.host == "lh3.googleusercontent.com" || String.ends_with?(uri.host || "", ".googleusercontent.com"))
+      (uri.host == "lh3.googleusercontent.com" ||
+         String.ends_with?(uri.host || "", ".googleusercontent.com"))
   end
 end

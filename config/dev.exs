@@ -12,7 +12,9 @@ if File.exists?(".env") do
         # Remove quotes if present
         value = String.replace(value, ~r/^["']|["']$/, "")
         System.put_env(key, value)
-      _ -> :ok
+
+      _ ->
+        :ok
     end
   end)
 end

@@ -152,7 +152,6 @@ defmodule Cuetube.Library do
   def import_playlist_from_youtube(user_id, youtube_id) do
     with {:ok, details} <- YouTube.get_playlist_details(youtube_id),
          {:ok, items} <- YouTube.get_playlist_items(youtube_id) do
-
       base_slug =
         (details.title || "playlist")
         |> String.downcase()
@@ -170,15 +169,16 @@ defmodule Cuetube.Library do
         slug: slug
       })
       |> Multi.run(:items, fn repo, %{playlist: playlist} ->
-        results = Enum.map(items, fn item_data ->
-          %PlaylistItem{playlist_id: playlist.id}
-          |> PlaylistItem.changeset(%{
-            youtube_video_id: item_data.id,
-            title: item_data.title || "Untitled Video",
-            position: item_data.position || 0
-          })
-          |> repo.insert()
-        end)
+        results =
+          Enum.map(items, fn item_data ->
+            %PlaylistItem{playlist_id: playlist.id}
+            |> PlaylistItem.changeset(%{
+              youtube_video_id: item_data.id,
+              title: item_data.title || "Untitled Video",
+              position: item_data.position || 0
+            })
+            |> repo.insert()
+          end)
 
         case Enum.find(results, fn {status, _} -> status == :error end) do
           nil -> {:ok, :inserted}
@@ -190,6 +190,7 @@ defmodule Cuetube.Library do
         {:ok, %{playlist: playlist}} ->
           Indexer.rebuild_for_playlist(playlist.id)
           {:ok, playlist}
+
         {:error, _step, reason, _changes} ->
           {:error, reason}
       end

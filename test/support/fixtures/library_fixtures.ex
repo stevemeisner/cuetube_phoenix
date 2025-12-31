@@ -36,7 +36,7 @@ defmodule Cuetube.LibraryFixtures do
       |> Enum.into(%{
         notes: "some notes",
         position: 42,
-        tags: %{},
+        tags: [],
         title: "some title",
         youtube_video_id: "some youtube_video_id"
       })

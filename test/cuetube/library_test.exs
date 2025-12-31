@@ -107,7 +107,7 @@ defmodule Cuetube.LibraryTest do
         title: "some title",
         youtube_video_id: "some youtube_video_id",
         notes: "some notes",
-        tags: %{}
+        tags: []
       }
 
       assert {:ok, %PlaylistItem{} = playlist_item} = Library.create_playlist_item(valid_attrs)
@@ -115,7 +115,7 @@ defmodule Cuetube.LibraryTest do
       assert playlist_item.title == "some title"
       assert playlist_item.youtube_video_id == "some youtube_video_id"
       assert playlist_item.notes == "some notes"
-      assert playlist_item.tags == %{}
+      assert playlist_item.tags == []
     end
 
     test "create_playlist_item/1 with invalid data returns error changeset" do
@@ -130,7 +130,7 @@ defmodule Cuetube.LibraryTest do
         title: "some updated title",
         youtube_video_id: "some updated youtube_video_id",
         notes: "some updated notes",
-        tags: %{}
+        tags: []
       }
 
       assert {:ok, %PlaylistItem{} = playlist_item} =
@@ -140,7 +140,7 @@ defmodule Cuetube.LibraryTest do
       assert playlist_item.title == "some updated title"
       assert playlist_item.youtube_video_id == "some updated youtube_video_id"
       assert playlist_item.notes == "some updated notes"
-      assert playlist_item.tags == %{}
+      assert playlist_item.tags == []
     end
 
     test "update_playlist_item/2 with invalid data returns error changeset" do

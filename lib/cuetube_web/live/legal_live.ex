@@ -37,14 +37,22 @@ defmodule CuetubeWeb.LegalLive do
     ~H"""
     <section>
       <h1>Privacy Policy</h1>
-      <p>Cuetube is designed to be as minimal as possible regarding your data. We respect your privacy and only collect what is strictly necessary to provide the service.</p>
+      <p>
+        Cuetube is designed to be as minimal as possible regarding your data. We respect your privacy and only collect what is strictly necessary to provide the service.
+      </p>
 
       <h2>1. Data We Collect</h2>
       <p>
         We only collect what is necessary to provide the service:
         <ul>
-          <li><strong>Authentication:</strong> Basic profile info from your Google account (Email, Name, Avatar) provided via OAuth.</li>
-          <li><strong>Curation:</strong> Playlists, descriptions, and video selections you explicitly create or modify on our platform.</li>
+          <li>
+            <strong>Authentication:</strong>
+            Basic profile info from your Google account (Email, Name, Avatar) provided via OAuth.
+          </li>
+          <li>
+            <strong>Curation:</strong>
+            Playlists, descriptions, and video selections you explicitly create or modify on our platform.
+          </li>
         </ul>
       </p>
 
