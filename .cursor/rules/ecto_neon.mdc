@@ -1,0 +1,14 @@
+---
+description: Ecto usage and Neon database optimizations.
+globs:
+  [
+    'lib/**/repo.ex',
+    'lib/**/schema.ex',
+    'lib/**/*_context.ex',
+    'priv/repo/migrations/*.exs',
+  ]
+---
+
+- Use `Ecto.Multi` for complex transactions (like the YouTube Sync process).
+- Use `fragment` for Postgres-specific features like `tsvector`, `websearch_to_tsquery`, and `similarity`.
+- Optimize Repo for Neon (SSL enabled).

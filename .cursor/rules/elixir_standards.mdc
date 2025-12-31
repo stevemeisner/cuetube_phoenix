@@ -1,0 +1,9 @@
+---
+description: General Elixir coding standards and best practices.
+globs: ['**/*.ex', '**/*.exs']
+---
+
+- Use idiomatic Elixir. Follow the [Elixir Style Guide](https://github.com/christopheradams/elixir_style_guide).
+- Use `@doc` and `@spec` for all public context functions.
+- Prefer pattern matching in function signatures over `if/else` or `case` inside functions when possible.
+- Use `with` for complex multi-step operations that can fail.

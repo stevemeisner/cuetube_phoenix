@@ -1,0 +1,9 @@
+---
+description: Testing standards for ExUnit and LiveView tests.
+globs: ['test/**/*.exs']
+---
+
+- Use `ExUnit.Case, async: true` whenever possible.
+- Use `Phoenix.LiveViewTest` for testing LiveViews without a browser.
+- Use `Mox` for mocking external APIs (like YouTube).
+- Each context should have a corresponding test file in `test/cuetube/`.

@@ -1,0 +1,23 @@
+// assets/css/app.scss
+@use 'base/reset';
+@use 'layouts/app';
+@use 'components/search';
+@use 'views/home_live';
+@use 'views/playlist_live';
+@use 'views/playlist_edit_live';
+@use 'views/playlist_new_live';
+@use 'views/dashboard_live';
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}

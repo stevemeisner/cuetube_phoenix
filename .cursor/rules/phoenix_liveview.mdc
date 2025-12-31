@@ -1,0 +1,15 @@
+---
+description: Best practices for Phoenix 1.7+ and LiveView components.
+globs:
+  [
+    'lib/**/*_live.ex',
+    'lib/**/*_component.ex',
+    'lib/**/components/*.ex',
+    'lib/**/*_view.ex',
+  ]
+---
+
+- Follow Phoenix 1.7+ directory structures and patterns.
+- Keep LiveViews thin; move business logic into Context modules.
+- Use `Phoenix.Component` for reusable UI elements.
+- For search suggestion/autocomplete, use `phx-debounce` on the input.

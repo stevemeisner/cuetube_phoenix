@@ -1,0 +1,10 @@
+---
+description: SASS and styling conventions for the PESAL stack.
+globs: ['assets/css/**/*.scss', 'assets/css/**/*.sass']
+---
+
+- Do NOT use Tailwind.
+- Use modular SASS files in `assets/css/`.
+- Organize SASS by views and components (e.g., `assets/css/views/_search_live.scss`).
+- Use BEM naming convention for CSS classes to avoid leakage.
+- Ensure the SASS watcher is configured in `dev.exs`.

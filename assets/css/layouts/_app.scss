@@ -1,0 +1,89 @@
+@use '../base/variables' as *;
+
+.main-header {
+  background: white;
+  border-bottom: 1px solid $color-border;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.flash-container {
+  min-height: 0;
+  margin-top: 1rem;
+  margin-bottom: -1rem;
+}
+
+/* Global Section Header Standard */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 1.5rem;
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: $color-text;
+    font-family: $font-serif;
+    margin: 0;
+  }
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-family: $font-serif;
+  color: $color-text;
+  text-decoration: none;
+
+  strong {
+    color: $color-primary;
+  }
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-item {
+  color: $color-secondary;
+  font-weight: 500;
+  font-size: 0.95rem;
+
+  &:hover {
+    color: $color-primary;
+    text-decoration: none;
+  }
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid $color-border;
+}
+
+.main-footer {
+  padding: 4rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid $color-border;
+  color: $color-secondary;
+  font-size: 0.9rem;
+  text-align: center;
+}

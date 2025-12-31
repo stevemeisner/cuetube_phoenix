@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="[word-break:break-word]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title suffix=" · Cuetube">
+      {assigns[:page_title] || "Augmented YouTube Playlists"}
+    </.live_title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Merriweather:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
+    </script>
+
+    <%= if ga_id = System.get_env("GA_ID") do %>
+      <!-- Google tag (gtag.js) -->
+      <script async src={"https://www.googletagmanager.com/gtag/js?id=#{ga_id}"}>
+      </script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<%= ga_id %>');
+      </script>
+    <% end %>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container header-content">
+        <div class="logo-section">
+          <.link navigate={~p"/"} class="logo">
+            <strong>Cue</strong>tube
+          </.link>
+        </div>
+        <nav class="nav-links">
+          <%= if @current_user do %>
+            <.link navigate={~p"/dashboard"} class="nav-item">Dashboard</.link>
+            <div class="user-menu">
+              <img src={~p"/avatar/#{@current_user.handle}"} class="user-avatar" />
+              <.link href={~p"/auth/logout"} method="delete" class="btn btn-sm btn-outline">
+                Logout
+              </.link>
+            </div>
+          <% else %>
+            <.link href={~p"/auth/google"} class="btn btn-sm btn-primary">
+              Login with Google
+            </.link>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      {@inner_content}
+    </main>
+
+    <footer class="main-footer">
+      <div class="container">
+        <p>&copy; {Date.utc_today().year} Cuetube. Augmented YouTube curation.</p>
+      </div>
+    </footer>
+  </body>
+</html>
