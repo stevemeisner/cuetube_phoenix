@@ -117,7 +117,8 @@ if config_env() == :prod do
 end
 
 config :cuetube,
-  youtube_api_key: System.get_env("YOUTUBE_API_KEY")
+  youtube_api_key: System.get_env("YOUTUBE_API_KEY"),
+  ga_id: System.get_env("GA_TRACKING_ID")
 
 # Google OAuth Configuration
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,

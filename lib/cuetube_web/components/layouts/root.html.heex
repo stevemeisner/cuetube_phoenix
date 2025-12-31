@@ -17,15 +17,16 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
 
-    <%= if ga_id = System.get_env("GA_ID") do %>
+    <%= if ga_id = Application.get_env(:cuetube, :ga_id) do %>
       <!-- Google tag (gtag.js) -->
       <script async src={"https://www.googletagmanager.com/gtag/js?id=#{ga_id}"}>
       </script>
       <script>
+        window.GA_TRACKING_ID = '{ga_id}';
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '<%= ga_id %>');
+        gtag('config', window.GA_TRACKING_ID);
       </script>
     <% end %>
   </head>
