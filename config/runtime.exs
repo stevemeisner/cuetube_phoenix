@@ -7,18 +7,18 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 
-# ## Using releases
-#
-# If you use `mix release`, you need to explicitly enable the server
-# by passing the PHX_SERVER=true when you start it:
-#
-#     PHX_SERVER=true bin/cuetube start
-#
-# Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
-# script that automatically sets the env var above.
-if System.get_env("PHX_SERVER") do
-  config :cuetube, CuetubeWeb.Endpoint, server: true
-end
+  # ## Using releases
+  #
+  # If you use `mix release`, you need to explicitly enable the server
+  # by passing the PHX_SERVER=true when you start it:
+  #
+  #     PHX_SERVER=true bin/cuetube start
+  #
+  # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
+  # script that automatically sets the env var above.
+  if System.get_env("PHX_SERVER") == "true" or config_env() == :prod do
+    config :cuetube, CuetubeWeb.Endpoint, server: true
+  end
 
 config :cuetube, CuetubeWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
@@ -31,15 +31,12 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
-
+  # Force SSL and set pool size
   config :cuetube, Cuetube.Repo,
     ssl: true,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    # For machines with several cores, consider starting multiple pools of `pool_size`
-    # pool_count: 4,
-    socket_options: maybe_ipv6
+    socket_options: if(System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: [])
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

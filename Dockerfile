@@ -55,6 +55,11 @@ COPY config/runtime.exs config/
 COPY rel rel
 RUN mix release
 
+# make sure the scripts are executable
+RUN chmod +x _build/${MIX_ENV}/rel/cuetube/bin/cuetube
+RUN chmod +x _build/${MIX_ENV}/rel/cuetube/bin/server
+RUN chmod +x _build/${MIX_ENV}/rel/cuetube/bin/migrate
+
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
 FROM ${RUNNER_IMAGE}
@@ -77,6 +82,9 @@ RUN chown nobody /app
 ENV MIX_ENV="prod"
 
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/cuetube ./
+
+# Ensure the binaries are executable
+RUN chmod +x bin/cuetube bin/server bin/migrate
 
 USER nobody
 
