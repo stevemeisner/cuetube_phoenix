@@ -1,0 +1,55 @@
+@use '../base/variables' as *;
+
+.legal-content-wrapper {
+  padding-top: 4rem;
+  padding-bottom: 6rem;
+  max-width: 800px;
+}
+
+.legal-content {
+  line-height: 1.6;
+  color: $color-text;
+
+  h1 {
+    font-family: $font-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    color: $color-text;
+  }
+
+  h2 {
+    font-family: $font-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: $color-text;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    color: $color-secondary;
+  }
+
+  ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    list-style-type: disc;
+
+    li {
+      margin-bottom: 0.5rem;
+      color: $color-secondary;
+
+      strong {
+        color: $color-text;
+      }
+    }
+  }
+
+  strong {
+    color: $color-text;
+    font-weight: 600;
+  }
+}
+

@@ -60,8 +60,12 @@
     </main>
 
     <footer class="main-footer">
-      <div class="container">
+      <div class="container footer-content">
         <p>&copy; {Date.utc_today().year} Cuetube. Augmented YouTube curation.</p>
+        <nav class="footer-links">
+          <.link navigate={~p"/privacy"}>Privacy Policy</.link>
+          <.link navigate={~p"/terms"}>Terms of Service</.link>
+        </nav>
       </div>
     </footer>
   </body>

@@ -32,6 +32,8 @@ defmodule CuetubeWeb.Router do
     live_session :public, on_mount: [{CuetubeWeb.UserAuth, :mount_current_user}] do
       live "/", HomeLive
       live "/p/:slug", PlaylistLive
+      live "/privacy", LegalLive, :privacy
+      live "/terms", LegalLive, :terms
     end
 
     live_session :authenticated, on_mount: [{CuetubeWeb.UserAuth, :ensure_authenticated}] do
