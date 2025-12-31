@@ -46,6 +46,51 @@ window.addEventListener('phx:page-loading-stop', (_info) => {
   }
 })
 
+// Track initial LiveView connection state to suppress false error messages during page load
+let initialConnectionTimeout = null
+document.body.dataset.lvInitialConnection = 'pending'
+
+// Set timeout for initial connection (4 seconds)
+initialConnectionTimeout = setTimeout(() => {
+  if (document.body.dataset.lvInitialConnection === 'pending') {
+    document.body.dataset.lvInitialConnection = 'failed'
+  }
+}, 4000)
+
+// Track successful connection
+window.addEventListener('phx:connected', () => {
+  if (document.body.dataset.lvInitialConnection === 'pending') {
+    document.body.dataset.lvInitialConnection = 'connected'
+    if (initialConnectionTimeout) {
+      clearTimeout(initialConnectionTimeout)
+      initialConnectionTimeout = null
+    }
+  }
+})
+
+// Helper function to check if error should be shown
+window.shouldShowConnectionError = function () {
+  const state = document.body.dataset.lvInitialConnection
+  // Show error if we've connected before (real disconnection) or if initial connection failed
+  return state === 'connected' || state === 'failed'
+}
+
+// Listen for phx:disconnected events and conditionally hide errors if still in initial connection window
+window.addEventListener('phx:disconnected', () => {
+  // If we're still in the initial connection window, hide any error messages that were shown
+  if (document.body.dataset.lvInitialConnection === 'pending') {
+    const clientError = document.querySelector('#client-error')
+    const serverError = document.querySelector('#server-error')
+
+    if (clientError && !clientError.hasAttribute('hidden')) {
+      clientError.setAttribute('hidden', '')
+    }
+    if (serverError && !serverError.hasAttribute('hidden')) {
+      serverError.setAttribute('hidden', '')
+    }
+  }
+})
+
 // connect if there are any LiveViews on the page
 liveSocket.connect()
 
