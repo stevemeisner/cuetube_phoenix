@@ -43,6 +43,9 @@ COPY assets assets
 # Compile the release
 RUN mix compile
 
+# create assets directories
+RUN mkdir -p priv/static/assets/js priv/static/assets/css
+
 # compile assets
 RUN mix assets.deploy
 

@@ -81,7 +81,7 @@ defmodule Cuetube.MixProject do
       "assets.build": ["compile", "esbuild cuetube", "sass cuetube"],
       "assets.deploy": [
         "esbuild cuetube --minify",
-        "sass cuetube --minify",
+        "sass cuetube --style=compressed",
         "phx.digest"
       ],
       precommit: ["compile --warnings-as-errors", "deps.unlock --unused", "format", "test"]
