@@ -8,8 +8,11 @@ defmodule Cuetube.Library.PlaylistItem do
     field :position, :integer
     field :notes, :string
     field :tags, {:array, :string}
+    field :thumbnail_url, :string
     field :timestamp_start, :integer
     field :timestamp_end, :integer
+    field :search_vector, :any, virtual: true
+
     belongs_to :playlist, Cuetube.Library.Playlist
   end
 
@@ -22,6 +25,7 @@ defmodule Cuetube.Library.PlaylistItem do
       :position,
       :notes,
       :tags,
+      :thumbnail_url,
       :timestamp_start,
       :timestamp_end
     ])

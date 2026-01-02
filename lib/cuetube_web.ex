@@ -86,6 +86,7 @@ defmodule CuetubeWeb do
       import Phoenix.HTML
       # Core UI components
       import CuetubeWeb.CoreComponents
+      import CuetubeWeb.PlaylistComponents
 
       # Common modules used in templates
       alias Phoenix.LiveView.JS

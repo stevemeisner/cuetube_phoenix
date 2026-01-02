@@ -147,7 +147,9 @@ defmodule CuetubeWeb.PlaylistEditLive do
     <div class="editor-card">
       <div class="card-preview">
         <img
-          src={"https://i.ytimg.com/vi/#{@item.youtube_video_id}/mqdefault.jpg"}
+          src={
+            @item.thumbnail_url || "https://i.ytimg.com/vi/#{@item.youtube_video_id}/mqdefault.jpg"
+          }
           alt={@item.title}
           class="thumbnail"
         />
@@ -251,8 +253,18 @@ defmodule CuetubeWeb.PlaylistEditLive do
 
   @impl true
   def handle_event("sync_from_youtube", _params, socket) do
-    # Placeholder for actual sync logic which would be in Cuetube.Library.Sync
-    {:noreply, put_flash(socket, :info, "Syncing from YouTube... (Simulated)")}
+    case Cuetube.Library.Sync.sync_playlist(socket.assigns.playlist) do
+      {:ok, updated_playlist} ->
+        items = Library.list_playlist_items(updated_playlist.id)
+
+        {:noreply,
+         socket
+         |> assign(playlist: updated_playlist, items: items)
+         |> put_flash(:info, "Playlist synced successfully!")}
+
+      {:error, reason} ->
+        {:noreply, put_flash(socket, :error, "Sync failed: #{inspect(reason)}")}
+    end
   end
 
   defp to_form_for_item(item) do

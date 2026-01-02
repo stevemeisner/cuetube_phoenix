@@ -12,7 +12,7 @@ defmodule Cuetube.YouTube.Client do
     |> Req.get(
       url: "/playlists",
       params: [
-        part: "snippet",
+        part: "snippet,contentDetails",
         id: playlist_id
       ]
     )
@@ -25,7 +25,8 @@ defmodule Cuetube.YouTube.Client do
              title: get_in(playlist, ["snippet", "title"]),
              description: get_in(playlist, ["snippet", "description"]),
              channel_title: get_in(playlist, ["snippet", "channelTitle"]),
-             thumbnail: get_in(playlist, ["snippet", "thumbnails", "high", "url"])
+             thumbnail: get_in(playlist, ["snippet", "thumbnails", "high", "url"]),
+             video_count: get_in(playlist, ["contentDetails", "itemCount"])
            }}
 
         [] ->
@@ -36,16 +37,20 @@ defmodule Cuetube.YouTube.Client do
 
   @impl true
   def get_playlist_items(playlist_id) do
-    # For MVP we just get the first 50 as in the original project
+    fetch_items_paginated(playlist_id, nil, [])
+  end
+
+  defp fetch_items_paginated(playlist_id, page_token, acc) do
+    params = [
+      part: "snippet,contentDetails",
+      playlistId: playlist_id,
+      maxResults: 50
+    ]
+
+    params = if page_token, do: params ++ [pageToken: page_token], else: params
+
     req()
-    |> Req.get(
-      url: "/playlistItems",
-      params: [
-        part: "snippet,contentDetails",
-        playlistId: playlist_id,
-        maxResults: 50
-      ]
-    )
+    |> Req.get(url: "/playlistItems", params: params)
     |> handle_response(fn body ->
       items =
         body["items"]
@@ -60,7 +65,14 @@ defmodule Cuetube.YouTube.Client do
         end)
         |> Enum.reject(&is_nil(&1.id))
 
-      {:ok, items}
+      new_acc = acc ++ items
+      next_page_token = body["nextPageToken"]
+
+      if next_page_token && length(new_acc) < 500 do
+        fetch_items_paginated(playlist_id, next_page_token, new_acc)
+      else
+        {:ok, new_acc}
+      end
     end)
   end
 

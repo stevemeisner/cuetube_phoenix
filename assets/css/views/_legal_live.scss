@@ -1,55 +1,54 @@
 @use '../base/variables' as *;
 
 .legal-content-wrapper {
-  padding-top: 4rem;
-  padding-bottom: 6rem;
+  padding-top: $space-3xl;
+  padding-bottom: $space-3xl;
   max-width: 800px;
 }
 
 .legal-content {
   line-height: 1.6;
-  color: $color-text;
+  color: $gray-800;
 
   h1 {
     font-family: $font-serif;
     font-size: 2.5rem;
     font-weight: 900;
-    margin-bottom: 2rem;
-    color: $color-text;
+    margin-bottom: $space-xl;
+    color: $gray-900;
   }
 
   h2 {
     font-family: $font-serif;
     font-size: 1.5rem;
     font-weight: 700;
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    color: $color-text;
+    margin-top: $space-2xl;
+    margin-bottom: $space-md;
+    color: $gray-900;
   }
 
   p {
-    margin-bottom: 1.5rem;
-    color: $color-secondary;
+    margin-bottom: $space-lg;
+    color: $gray-600;
   }
 
   ul {
-    margin-bottom: 1.5rem;
-    padding-left: 1.5rem;
+    margin-bottom: $space-lg;
+    padding-left: $space-lg;
     list-style-type: disc;
 
     li {
-      margin-bottom: 0.5rem;
-      color: $color-secondary;
+      margin-bottom: $space-xs;
+      color: $gray-600;
 
       strong {
-        color: $color-text;
+        color: $gray-800;
       }
     }
   }
 
   strong {
-    color: $color-text;
+    color: $gray-800;
     font-weight: 600;
   }
 }
-

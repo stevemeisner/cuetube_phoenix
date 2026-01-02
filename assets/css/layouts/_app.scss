@@ -3,37 +3,40 @@
 .main-header {
   background: white;
   border-bottom: 1px solid $color-border;
-  padding: 1rem 0;
+  height: $header-height;
+  display: flex;
+  align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 .flash-container {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: $space-md;
+  margin-bottom: $space-md;
 }
 
 .flash-message {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1.25rem;
-  border-radius: 8px;
+  padding: 0.75rem $space-lg;
+  border-radius: $border-radius-md;
   font-size: 0.95rem;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: $space-sm;
   animation: slideIn 0.3s ease-out;
 
   &.flash-info {
-    background-color: #f0fdf4;
-    color: #166534;
+    background-color: #f0fdf4; // slate-50 green
+    color: $color-success;
     border: 1px solid #bbf7d0;
   }
 
   &.flash-error {
-    background-color: #fef2f2;
-    color: #991b1b;
+    background-color: #fef2f2; // slate-50 red
+    color: $color-error;
     border: 1px solid #fecaca;
   }
 
@@ -42,7 +45,7 @@
 
     .flash-title {
       font-weight: 700;
-      margin-bottom: 0.25rem;
+      margin-bottom: $space-xs;
     }
   }
 
@@ -54,7 +57,7 @@
     color: inherit;
     opacity: 0.5;
     cursor: pointer;
-    padding: 0 0.5rem;
+    padding: 0 $space-sm;
     transition: opacity 0.2s;
 
     &:hover {
@@ -79,12 +82,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 1.25rem;
+  padding-bottom: $space-lg;
 
   .section-title {
     font-size: 1.5rem;
     font-weight: 900;
-    color: $color-text;
+    color: $gray-900;
     font-family: $font-serif;
     margin: 0;
   }
@@ -94,17 +97,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  width: 100%;
 }
 
 .logo {
   font-size: 1.5rem;
   font-family: $font-serif;
-  color: $color-text;
+  color: $gray-900;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: $space-sm;
 
   .logo-img {
     width: 32px;
@@ -128,7 +131,7 @@
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: $space-xl;
 }
 
 .nav-item {
@@ -145,34 +148,35 @@
 .user-menu {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: $space-md;
 }
 
 .user-avatar {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: $border-radius-full;
   border: 1px solid $color-border;
+  background-color: $gray-100;
 }
 
 .main-footer {
-  padding: 4rem 0;
-  margin-top: 4rem;
+  padding: $space-3xl 0;
+  margin-top: $space-3xl;
   border-top: 1px solid $color-border;
   color: $color-secondary;
   font-size: 0.9rem;
-  text-align: center;
+  background-color: white;
 
   .footer-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: $space-md;
   }
 
   .footer-links {
     display: flex;
-    gap: 1.5rem;
+    gap: $space-lg;
 
     a {
       color: $color-secondary;

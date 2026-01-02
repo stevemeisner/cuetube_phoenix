@@ -21,20 +21,20 @@ defmodule Cuetube.Search do
         cond do
           search_text != "" and prefix_q ->
             dynamic(
-              [ps],
+              [p],
               fragment(
                 "? @@ websearch_to_tsquery('simple', ?) OR ? @@ to_tsquery('simple', ?)",
-                ps.search_vector,
+                p.search_vector,
                 ^search_text,
-                ps.search_vector,
+                p.search_vector,
                 ^prefix_q
               )
             )
 
           search_text != "" ->
             dynamic(
-              [ps],
-              fragment("? @@ websearch_to_tsquery('simple', ?)", ps.search_vector, ^search_text)
+              [p],
+              fragment("? @@ websearch_to_tsquery('simple', ?)", p.search_vector, ^search_text)
             )
 
           true ->
@@ -45,22 +45,22 @@ defmodule Cuetube.Search do
         cond do
           search_text != "" and prefix_q ->
             dynamic(
-              [ps],
+              [p],
               fragment(
                 "greatest(ts_rank_cd(?, websearch_to_tsquery('simple', ?)), ts_rank_cd(?, to_tsquery('simple', ?)) * 0.9)",
-                ps.search_vector,
+                p.search_vector,
                 ^search_text,
-                ps.search_vector,
+                p.search_vector,
                 ^prefix_q
               )
             )
 
           search_text != "" ->
             dynamic(
-              [ps],
+              [p],
               fragment(
                 "ts_rank_cd(?, websearch_to_tsquery('simple', ?))",
-                ps.search_vector,
+                p.search_vector,
                 ^search_text
               )
             )
@@ -69,11 +69,10 @@ defmodule Cuetube.Search do
             dynamic(1.0)
         end
 
-      order_by = [desc: rank, desc: dynamic([ps, p], p.created_at)]
+      order_by = [desc: rank, desc: dynamic([p], p.created_at)]
 
       query =
-        from(ps in Cuetube.Library.PlaylistSearch,
-          join: p in assoc(ps, :playlist),
+        from(p in Cuetube.Library.Playlist,
           left_join: u in assoc(p, :user),
           where: ^matches,
           order_by: ^order_by,
@@ -84,6 +83,7 @@ defmodule Cuetube.Search do
             playlist_title: p.title,
             playlist_description: p.description,
             playlist_inserted_at: p.created_at,
+            thumbnail_url: p.thumbnail_url,
             curator_handle: u.handle,
             curator_display_name: u.display_name,
             curator_avatar_url: u.avatar_url
@@ -92,7 +92,7 @@ defmodule Cuetube.Search do
 
       query =
         if handle do
-          where(query, [ps, p, u], ilike(u.handle, ^handle))
+          where(query, [p, u], ilike(u.handle, ^handle))
         else
           query
         end
@@ -141,15 +141,14 @@ defmodule Cuetube.Search do
 
     fts_results =
       if prefix_q do
-        from(ps in Cuetube.Library.PlaylistSearch,
-          join: p in assoc(ps, :playlist),
+        from(p in Cuetube.Library.Playlist,
           left_join: u in assoc(p, :user),
           where:
             fragment(
               "? @@ websearch_to_tsquery('simple', ?) OR ? @@ to_tsquery('simple', ?)",
-              ps.search_vector,
+              p.search_vector,
               ^text,
-              ps.search_vector,
+              p.search_vector,
               ^prefix_q
             ),
           limit: 6,
@@ -157,15 +156,15 @@ defmodule Cuetube.Search do
             type: :playlist,
             slug: p.slug,
             title: p.title,
-            curator_display_name: u.display_name
+            curator_display_name: u.display_name,
+            video_count: p.video_count
           }
         )
         |> Repo.all()
       else
-        from(ps in Cuetube.Library.PlaylistSearch,
-          join: p in assoc(ps, :playlist),
+        from(p in Cuetube.Library.Playlist,
           left_join: u2 in assoc(p, :user),
-          where: fragment("? @@ websearch_to_tsquery('simple', ?)", ps.search_vector, ^text),
+          where: fragment("? @@ websearch_to_tsquery('simple', ?)", p.search_vector, ^text),
           limit: 6,
           select: %{
             type: :playlist,
@@ -188,7 +187,8 @@ defmodule Cuetube.Search do
             type: :playlist,
             slug: p.slug,
             title: p.title,
-            curator_display_name: u.display_name
+            curator_display_name: u.display_name,
+            video_count: p.video_count
           }
         )
         |> Repo.all()
@@ -209,15 +209,10 @@ defmodule Cuetube.Search do
         join: p in assoc(pi, :playlist),
         where:
           fragment(
-            "(to_tsvector('simple', coalesce(?, '') || ' ' || coalesce(?, '') || ' ' || coalesce(?::text, '')) @@ websearch_to_tsquery('simple', ?))
-                          OR (to_tsvector('simple', coalesce(?, '') || ' ' || coalesce(?, '') || ' ' || coalesce(?::text, '')) @@ to_tsquery('simple', ?))",
-            pi.title,
-            pi.notes,
-            pi.tags,
+            "? @@ websearch_to_tsquery('simple', ?) OR ? @@ to_tsquery('simple', ?)",
+            pi.search_vector,
             ^text,
-            pi.title,
-            pi.notes,
-            pi.tags,
+            pi.search_vector,
             ^prefix_q
           ),
         limit: 6,
@@ -232,14 +227,7 @@ defmodule Cuetube.Search do
     else
       from(pi in Cuetube.Library.PlaylistItem,
         join: p in assoc(pi, :playlist),
-        where:
-          fragment(
-            "to_tsvector('simple', coalesce(?, '') || ' ' || coalesce(?, '') || ' ' || coalesce(?::text, '')) @@ websearch_to_tsquery('simple', ?)",
-            pi.title,
-            pi.notes,
-            pi.tags,
-            ^text
-          ),
+        where: fragment("? @@ websearch_to_tsquery('simple', ?)", pi.search_vector, ^text),
         limit: 6,
         select: %{
           type: :video,

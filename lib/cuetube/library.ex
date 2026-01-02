@@ -63,6 +63,7 @@ defmodule Cuetube.Library do
     Playlist
     |> where(user_id: ^user_id)
     |> order_by(desc: :created_at)
+    |> preload([:user, :playlist_items])
     |> Repo.all()
   end
 
@@ -73,7 +74,7 @@ defmodule Cuetube.Library do
     Playlist
     |> order_by([p], desc: p.created_at)
     |> limit(^limit)
-    |> preload(:user)
+    |> preload([:user, :playlist_items])
     |> Repo.all()
   end
 
@@ -166,6 +167,8 @@ defmodule Cuetube.Library do
         youtube_playlist_id: youtube_id,
         title: details.title || "Untitled Playlist",
         description: details.description || "",
+        thumbnail_url: details.thumbnail,
+        video_count: details.video_count,
         slug: slug
       })
       |> Multi.run(:items, fn repo, %{playlist: playlist} ->
@@ -175,7 +178,8 @@ defmodule Cuetube.Library do
             |> PlaylistItem.changeset(%{
               youtube_video_id: item_data.id,
               title: item_data.title || "Untitled Video",
-              position: item_data.position || 0
+              position: item_data.position || 0,
+              thumbnail_url: item_data.thumbnail
             })
             |> repo.insert()
           end)

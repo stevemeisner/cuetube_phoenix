@@ -1,5 +1,6 @@
 defmodule CuetubeWeb.DashboardLive do
   use CuetubeWeb, :live_view
+  import CuetubeWeb.PlaylistComponents
   alias Cuetube.Library
 
   @impl true
@@ -41,17 +42,10 @@ defmodule CuetubeWeb.DashboardLive do
               </.link>
             </div>
           <% else %>
-            <div class="dashboard-grid">
+            <div class="grid">
               <%= for playlist <- @playlists do %>
-                <div class="dashboard-card">
-                  <div class="card-body">
-                    <h3 class="card-title">{playlist.title}</h3>
-                    <p class="card-desc">{playlist.description}</p>
-                    <div class="card-meta">
-                      <span>Synced {Calendar.strftime(playlist.last_synced_at, "%b %d, %Y")}</span>
-                    </div>
-                  </div>
-                  <div class="card-actions">
+                <.playlist_card playlist={playlist}>
+                  <:actions>
                     <.link navigate={~p"/p/#{playlist.slug}"} class="btn btn-sm btn-outline">
                       View Public
                     </.link>
@@ -61,8 +55,8 @@ defmodule CuetubeWeb.DashboardLive do
                     >
                       Edit Curation
                     </.link>
-                  </div>
-                </div>
+                  </:actions>
+                </.playlist_card>
               <% end %>
             </div>
           <% end %>

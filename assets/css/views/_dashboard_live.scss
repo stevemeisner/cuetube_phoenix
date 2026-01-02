@@ -1,8 +1,8 @@
 @use '../base/variables' as *;
 
 .dashboard-view {
-  padding-top: 1rem;
-  padding-bottom: 4rem;
+  padding-top: $space-md;
+  padding-bottom: $space-3xl;
 }
 
 .dashboard-header {
@@ -10,50 +10,52 @@
 
   .header-actions {
     display: flex;
-    gap: 1rem;
+    gap: $space-md;
     align-self: center;
   }
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $space-xl;
 }
 
+// Custom Dashboard card overrides if needed, but we use .playlist-card
 .dashboard-card {
   background: white;
   border: 1px solid $color-border;
-  border-radius: 16px;
+  border-radius: $border-radius-lg;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   overflow: hidden;
+  box-shadow: $shadow-sm;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.1);
-    border-color: #cbd5e1;
+    box-shadow: $shadow-lg;
+    border-color: $gray-300;
   }
 }
 
 .card-body {
-  padding: 2rem;
+  padding: $space-xl;
   flex: 1;
 
   .card-title {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.35rem;
+    margin: 0 0 $space-sm 0;
+    font-size: 1.25rem;
     font-weight: 700;
     line-height: 1.3;
-    color: $color-text;
+    color: $gray-900;
   }
 
   .card-desc {
     font-size: 0.95rem;
-    color: $color-secondary;
+    color: $color-text-muted;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: $space-lg;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -65,17 +67,17 @@
   display: flex;
   align-items: center;
   font-size: 0.8rem;
-  color: #94a3b8;
-  font-weight: 500;
+  color: $gray-400;
+  font-weight: 600;
 }
 
 .card-actions {
-  padding: 1.25rem 2rem;
-  background: #f8fafc;
+  padding: $space-md $space-xl;
+  background: $gray-50;
   border-top: 1px solid $color-border;
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: $space-md;
 
   .btn {
     flex: 1;
@@ -90,23 +92,23 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 6rem 2rem;
-  background: #f8fafc;
-  border: 2px dashed #cbd5e1;
-  border-radius: 20px;
-  color: $color-secondary;
+  padding: $space-3xl $space-xl;
+  background: $gray-50;
+  border: 2px dashed $gray-300;
+  border-radius: $border-radius-xl;
+  color: $gray-500;
 
   .empty-icon-wrapper {
     width: 64px;
     height: 64px;
     background: white;
-    border-radius: 16px;
+    border-radius: $border-radius-lg;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    color: #94a3b8;
+    margin-bottom: $space-lg;
+    box-shadow: $shadow-sm;
+    color: $gray-400;
 
     .empty-icon {
       width: 32px;
@@ -117,14 +119,14 @@
   .empty-title {
     font-size: 1.75rem;
     font-weight: 800;
-    color: $color-text;
-    margin-bottom: 0.75rem;
+    color: $gray-900;
+    margin-bottom: $space-sm;
     font-family: $font-serif;
   }
 
   .empty-text {
     max-width: 400px;
-    margin-bottom: 2rem;
+    margin-bottom: $space-xl;
     line-height: 1.6;
     font-size: 1.1rem;
   }

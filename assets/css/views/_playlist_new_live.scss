@@ -1,17 +1,17 @@
-@use "../base/variables" as *;
+@use '../base/variables' as *;
 
 .new-playlist-view {
-  padding: 2rem 0 4rem;
+  padding: $space-xl 0 $space-3xl;
 }
 
 .new-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 1.5rem;
+  gap: $space-lg;
+  margin-bottom: $space-xl;
+  border-bottom: 1px solid $gray-200;
+  padding-bottom: $space-lg;
 
   @media (max-width: 640px) {
     flex-direction: column;
@@ -22,21 +22,21 @@
 .new-title {
   font-size: 2rem;
   margin: 0;
-  color: $color-text;
+  color: $gray-900;
 }
 
 .new-subtitle {
-  margin: 0.5rem 0 0;
-  color: $color-secondary;
+  margin: $space-xs 0 0;
+  color: $gray-500;
   max-width: 52rem;
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: $space-md;
   font-size: 0.9rem;
-  color: $color-secondary;
+  color: $gray-500;
 
   @media (max-width: 640px) {
     justify-content: space-between;
@@ -44,44 +44,46 @@
 }
 
 .new-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 2rem;
+  background: white;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-lg;
+  padding: $space-2xl;
+  box-shadow: $shadow-sm;
 }
 
 .error-box {
   border: 1px solid rgba($color-accent, 0.35);
   background: rgba($color-accent, 0.08);
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.25rem;
+  border-radius: $border-radius-md;
+  padding: $space-md $space-lg;
+  margin-bottom: $space-lg;
 }
 
 .error-title {
   font-weight: 700;
-  color: $color-text;
-  margin-bottom: 0.25rem;
+  color: $gray-900;
+  margin-bottom: $space-xs;
 }
 
 .error-hint {
-  color: $color-secondary;
+  color: $gray-600;
   font-size: 0.9rem;
 }
 
 .new-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: $space-md;
 
   .label {
-    font-weight: 600;
-    color: $color-text;
+    font-weight: 700;
+    color: $gray-700;
+    font-size: 0.95rem;
   }
 
   .form-row {
     display: flex;
-    gap: 0.5rem;
+    gap: $space-sm;
     width: 100%;
 
     @media (max-width: 640px) {
@@ -90,11 +92,12 @@
 
     input {
       flex: 1;
-      padding: 0.75rem 1rem;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
+      padding: 0.75rem $space-md;
+      border: 1px solid $gray-300;
+      border-radius: $border-radius-md;
       font-size: 1rem;
       transition: all 0.2s;
+      font-family: $font-sans;
 
       &:focus {
         outline: none;
@@ -104,15 +107,14 @@
     }
 
     button {
-      padding: 0 1.5rem;
+      padding: 0 $space-xl;
       white-space: nowrap;
     }
   }
 
   .helper-text {
-    margin-top: 0.25rem;
-    color: $color-secondary;
+    margin-top: $space-xs;
+    color: $gray-500;
     font-size: 0.95rem;
   }
 }
-

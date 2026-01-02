@@ -1,5 +1,6 @@
 defmodule CuetubeWeb.HomeLive do
   use CuetubeWeb, :live_view
+  import CuetubeWeb.PlaylistComponents
   alias Cuetube.Search
   alias Cuetube.Library
 
@@ -45,7 +46,7 @@ defmodule CuetubeWeb.HomeLive do
 
             <div class="search-box-wrapper">
               <form phx-change="suggest" phx-submit="search" class="search-form">
-                <span class="search-icon">🔍</span>
+                <.icon name="hero-magnifying-glass" class="search-icon" />
                 <input
                   type="text"
                   name="query"
@@ -75,6 +76,9 @@ defmodule CuetubeWeb.HomeLive do
                             <%= if suggestion.type == :playlist do %>
                               <span class="suggestion-meta">
                                 by {suggestion.curator_display_name || "anonymous"}
+                                <%= if suggestion.video_count do %>
+                                  • {suggestion.video_count} videos
+                                <% end %>
                               </span>
                             <% end %>
                           </div>
@@ -131,47 +135,6 @@ defmodule CuetubeWeb.HomeLive do
     </Layouts.app>
     """
   end
-
-  defp playlist_card(assigns) do
-    # Handle both Search Result map and Playlist struct
-    ~H"""
-    <.link navigate={~p"/p/#{playlist_slug(@playlist)}"} class="card">
-      <div class="card-content">
-        <h3 class="card-title">{playlist_title(@playlist)}</h3>
-        <p class="card-desc">
-          {playlist_desc(@playlist)}
-        </p>
-
-        <div class="curator">
-          <%= if curator_handle(@playlist) do %>
-            <img src={~p"/avatar/#{curator_handle(@playlist)}"} loading="lazy" />
-          <% else %>
-            <div class="curator-placeholder"></div>
-          <% end %>
-          <span>by {curator_name(@playlist)}</span>
-        </div>
-      </div>
-    </.link>
-    """
-  end
-
-  # Helper functions to handle different data shapes
-  defp playlist_slug(%{playlist_slug: slug}), do: slug
-  defp playlist_slug(%{slug: slug}), do: slug
-
-  defp playlist_title(%{playlist_title: title}), do: title
-  defp playlist_title(%{title: title}), do: title
-
-  defp playlist_desc(%{playlist_description: desc}), do: desc || "No description provided."
-  defp playlist_desc(%{description: desc}), do: desc || "No description provided."
-
-  defp curator_name(%{curator_display_name: name}), do: name || "anonymous"
-  defp curator_name(%{user: %{display_name: name}}), do: name || "anonymous"
-  defp curator_name(_), do: "anonymous"
-
-  defp curator_handle(%{curator_handle: handle}), do: handle
-  defp curator_handle(%{user: %{handle: handle}}), do: handle
-  defp curator_handle(_), do: nil
 
   # Event handlers (similar to SearchLive)
   @impl true

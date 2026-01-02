@@ -1,5 +1,6 @@
 defmodule CuetubeWeb.PlaylistLive do
   use CuetubeWeb, :live_view
+  import CuetubeWeb.PlaylistComponents
   alias Cuetube.Library
 
   @impl true
@@ -34,25 +35,33 @@ defmodule CuetubeWeb.PlaylistLive do
     <Layouts.app flash={@flash} current_user={@current_user}>
       <div class="playlist-view container">
         <header class="section-header playlist-header">
-          <div class="header-top">
-            <div class="curator-info">
-              <%= if @playlist.user.handle do %>
-                <img src={~p"/avatar/#{@playlist.user.handle}"} class="curator-avatar" />
-              <% end %>
-              <span>Curated by <strong>{@playlist.user.display_name}</strong></span>
-            </div>
-            <div class="header-actions">
-              <%= if @current_user && @current_user.id == @playlist.user_id do %>
-                <.link navigate={~p"/playlists/#{@playlist.id}/edit"} class="btn btn-sm btn-outline">
-                  <.icon name="hero-pencil-square" class="w-4 h-4 mr-1" /> Edit Playlist Curation
-                </.link>
-              <% end %>
-            </div>
+          <div class="header-collage">
+            <.playlist_collage playlist={@playlist} />
           </div>
-          <h1 class="section-title playlist-title">{@playlist.title}</h1>
-          <%= if @playlist.description do %>
-            <p class="playlist-description">{@playlist.description}</p>
-          <% end %>
+          <div class="header-main">
+            <div class="header-top">
+              <div class="curator-info">
+                <%= if @playlist.user.handle do %>
+                  <img src={~p"/avatar/#{@playlist.user.handle}"} class="curator-avatar" />
+                <% end %>
+                <span>Curated by <strong>{@playlist.user.display_name}</strong></span>
+              </div>
+              <div class="header-actions">
+                <%= if @current_user && @current_user.id == @playlist.user_id do %>
+                  <.link
+                    navigate={~p"/playlists/#{@playlist.id}/edit"}
+                    class="btn btn-sm btn-outline"
+                  >
+                    <.icon name="hero-pencil-square" class="w-4 h-4 mr-1" /> Edit Playlist Curation
+                  </.link>
+                <% end %>
+              </div>
+            </div>
+            <h1 class="section-title playlist-title">{@playlist.title}</h1>
+            <%= if @playlist.description do %>
+              <p class="playlist-description">{@playlist.description}</p>
+            <% end %>
+          </div>
         </header>
 
         <div class="playlist-layout">
@@ -108,6 +117,15 @@ defmodule CuetubeWeb.PlaylistLive do
                   class={["video-item", item.youtube_video_id == @active_video_id && "active"]}
                 >
                   <span class="item-index">{idx + 1}.</span>
+                  <div class="item-thumbnail">
+                    <img
+                      src={
+                        item.thumbnail_url ||
+                          "https://i.ytimg.com/vi/#{item.youtube_video_id}/mqdefault.jpg"
+                      }
+                      loading="lazy"
+                    />
+                  </div>
                   <div class="item-info">
                     <div class="item-title">{item.title}</div>
                     <%= if item.notes do %>
