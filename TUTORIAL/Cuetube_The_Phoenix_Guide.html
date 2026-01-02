@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Cuetube: The Phoenix Guide</title>
+    <style>
+      /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+      html {
+        color: #1a1a1a;
+        background-color: #fdfdfd;
+      }
+
+      body {
+        margin: 0 auto;
+        max-width: 36em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          font-size: 0.9em;
+          padding: 12px;
+        }
+
+        h1 {
+          font-size: 1.8em;
+        }
+      }
+
+      @media print {
+        html {
+          background-color: white;
+        }
+
+        body {
+          background-color: transparent;
+          color: black;
+          font-size: 12pt;
+        }
+
+        p,
+        h2,
+        h3 {
+          orphans: 3;
+          widows: 3;
+        }
+
+        h2,
+        h3,
+        h4 {
+          page-break-after: avoid;
+        }
+      }
+
+      p {
+        margin: 1em 0;
+      }
+
+      a {
+        color: #1a1a1a;
+      }
+
+      a:visited {
+        color: #1a1a1a;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      svg {
+        height: auto;
+        max-width: 100%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-top: 1.4em;
+      }
+
+      h5,
+      h6 {
+        font-size: 1em;
+        font-style: italic;
+      }
+
+      h6 {
+        font-weight: normal;
+      }
+
+      ol,
+      ul {
+        padding-left: 1.7em;
+        margin-top: 1em;
+      }
+
+      li>ol,
+      li>ul {
+        margin-top: 0;
+      }
+
+      blockquote {
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
+      }
+
+      code {
+        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+        font-size: 85%;
+        margin: 0;
+        hyphens: manual;
+      }
+
+      pre {
+        margin: 1em 0;
+        overflow: auto;
+      }
+
+      pre code {
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
+      }
+
+      .sourceCode {
+        background-color: transparent;
+        overflow: visible;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid #1a1a1a;
+        height: 1px;
+        margin: 1em 0;
+      }
+
+      table {
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
+      }
+
+      table caption {
+        margin-bottom: 0.75em;
+      }
+
+      tbody {
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+      }
+
+      th {
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+      }
+
+      td {
+        padding: 0.125em 0.5em 0.25em 0.5em;
+      }
+
+      header {
+        margin-bottom: 4em;
+        text-align: center;
+      }
+
+      #TOC li {
+        list-style: none;
+      }
+
+      #TOC ul {
+        padding-left: 1.3em;
+      }
+
+      #TOC>ul {
+        padding-left: 0;
+      }
+
+      #TOC a:not(:hover) {
+        text-decoration: none;
+      }
+
+      code {
+        white-space: pre-wrap;
+      }
+
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+
+      div.columns {
+        display: flex;
+        gap: min(4vw, 1.5em);
+      }
+
+      div.column {
+        flex: auto;
+        overflow-x: auto;
+      }
+
+      div.hanging-indent {
+        margin-left: 1.5em;
+        text-indent: -1.5em;
+      }
+
+      /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+      ul.task-list[class] {
+        list-style: none;
+      }
+
+      ul.task-list li input[type="checkbox"] {
+        font-size: inherit;
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
+      }
+
+      .display.math {
+        display: block;
+        text-align: center;
+        margin: 0.5rem auto;
+      }
+    </style>
+    <style>
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #333333;
+        --link-color: #2563eb;
+        --border-color: #e5e7eb;
+        --code-bg: #1e1e1e;
+        /* VS Code dark */
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+      }
+
+      /* Typography */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: #111827;
+        margin-top: 2em;
+        margin-bottom: 0.75em;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.3em;
+        margin-top: 0;
+      }
+
+      h2 {
+        font-size: 1.75rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.3em;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+      }
+
+      p {
+        margin-bottom: 1.25em;
+      }
+
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* Table of Contents */
+      #TOC {
+        background: #f9fafb;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      #TOC ul {
+        padding-left: 1.5rem;
+        margin-bottom: 0;
+      }
+
+      #TOC>ul {
+        padding-left: 0;
+        list-style-type: none;
+      }
+
+      #TOC>ul>li>a {
+        font-weight: 600;
+        font-size: 1.1em;
+        display: block;
+        margin-bottom: 0.5em;
+        margin-top: 1em;
+      }
+
+      #TOC a {
+        color: #374151;
+      }
+
+      #TOC a:hover {
+        color: var(--link-color);
+      }
+
+      /* Code Blocks */
+      pre {
+        background-color: var(--code-bg);
+        border-radius: 6px;
+        padding: 1em;
+        overflow-x: auto;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin: 1.5em 0;
+      }
+
+      code {
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+        background-color: #f3f4f6;
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+        color: #ef4444;
+        /* Reddish for inline code like simple 'var' */
+      }
+
+      pre code {
+        background-color: transparent;
+        color: #e5e7eb;
+        /* Light text for dark block */
+        padding: 0;
+        font-size: 0.9em;
+      }
+
+      /* Blockquotes */
+      blockquote {
+        border-left: 4px solid var(--link-color);
+        padding-left: 1rem;
+        margin-left: 0;
+        color: #4b5563;
+        font-style: italic;
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 0 4px 4px 0;
+      }
+
+      /* Lists */
+      ul,
+      ol {
+        padding-left: 1.5em;
+        margin-bottom: 1.25em;
+      }
+
+      li {
+        margin-bottom: 0.5em;
+      }
+
+      li>ul {
+        margin-top: 0.5em;
+      }
+
+      /* Tables */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1.5em;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--border-color);
+        padding: 0.75rem;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f3f4f6;
+        font-weight: 600;
+      }
+
+      /* Images */
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+      }
+
+      /* Print Styles */
+      @media print {
+        body {
+          max-width: 100%;
+          padding: 0;
+        }
+
+        #TOC {
+          display: none;
+        }
+
+        /* Optional: Hide TOC in print if preferred, but usually good to keep */
+        pre,
+        blockquote {
+          break-inside: avoid;
+        }
+
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+    </style>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet">
+
+    <!-- Highlight.js for Syntax Highlighting -->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/elixir.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+  </head>
+
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Cuetube: The Phoenix Guide</h1>
+    </header>
+    <nav id="TOC" role="doc-toc">
+      <ul>
+        <li><a href="#from-react-to-phoenix-a-developers-field-guide"
+            id="toc-from-react-to-phoenix-a-developers-field-guide">From React to
+            Phoenix: A Developer’s Field Guide</a>
+          <ul>
+            <li><a href="#the-cuetube-architecture-series"
+                id="toc-the-cuetube-architecture-series">The “Cuetube” Architecture
+                Series</a></li>
+          </ul>
+        </li>
+        <li><a href="#part-1-the-blueprint-stack-structure"
+            id="toc-part-1-the-blueprint-stack-structure">Part 1: The Blueprint
+            (Stack &amp; Structure)</a>
+          <ul>
+            <li><a href="#the-30000-foot-view" id="toc-the-30000-foot-view">The
+                30,000 Foot View</a></li>
+            <li><a href="#the-kitchen-project-structure" id="toc-the-kitchen-project-structure">The
+                Kitchen (Project
+                Structure)</a></li>
+            <li><a href="#the-language-elixir-in-a-nutshell"
+                id="toc-the-language-elixir-in-a-nutshell">The Language: Elixir in a
+                Nutshell</a></li>
+            <li><a href="#your-first-mission" id="toc-your-first-mission">Your First
+                Mission</a></li>
+          </ul>
+        </li>
+        <li><a href="#part-2-the-vault-data-ecto" id="toc-part-2-the-vault-data-ecto">Part 2: The
+            Vault (Data &amp;
+            Ecto)</a>
+          <ul>
+            <li><a href="#the-schema-libcuetubeaccountsuser.ex"
+                id="toc-the-schema-libcuetubeaccountsuser.ex">The Schema:
+                <code>lib/cuetube/accounts/user.ex</code></a></li>
+            <li><a href="#the-bouncer-changesets" id="toc-the-bouncer-changesets">The Bouncer:
+                Changesets</a></li>
+            <li><a href="#the-repo-the-context" id="toc-the-repo-the-context">The
+                Repo &amp; The Context</a></li>
+            <li><a href="#summary" id="toc-summary">Summary</a></li>
+          </ul>
+        </li>
+        <li><a href="#part-3-the-traffic-controller-router-request"
+            id="toc-part-3-the-traffic-controller-router-request">Part 3: The
+            Traffic Controller (Router &amp; Request)</a>
+          <ul>
+            <li><a href="#the-pipeline-the-assembly-line"
+                id="toc-the-pipeline-the-assembly-line">The Pipeline (The Assembly
+                Line)</a></li>
+            <li><a href="#scopes-the-vip-sections" id="toc-scopes-the-vip-sections">Scopes (The VIP
+                Sections)</a></li>
+            <li><a href="#the-dead-view-vs.-liveview" id="toc-the-dead-view-vs.-liveview">The “Dead”
+                View
+                vs. LiveView</a></li>
+            <li><a href="#the-auth-flow-oauth" id="toc-the-auth-flow-oauth">The Auth
+                Flow (OAuth)</a></li>
+          </ul>
+        </li>
+        <li><a href="#part-4-the-heartbeat-liveview-basics"
+            id="toc-part-4-the-heartbeat-liveview-basics">Part 4: The Heartbeat
+            (LiveView Basics)</a>
+          <ul>
+            <li><a href="#the-connection-lifecycle" id="toc-the-connection-lifecycle">The Connection
+                Lifecycle</a></li>
+            <li><a href="#interactivity-events" id="toc-interactivity-events">Interactivity
+                (Events)</a></li>
+            <li><a href="#no-api-needed" id="toc-no-api-needed">No API
+                Needed</a></li>
+          </ul>
+        </li>
+        <li><a href="#part-5-the-face-ui-components" id="toc-part-5-the-face-ui-components">Part 5:
+            The Face (UI &amp;
+            Components)</a>
+          <ul>
+            <li><a href="#heex-html-elixir" id="toc-heex-html-elixir">HEEx (HTML +
+                Elixir)</a></li>
+            <li><a href="#core-components-libcuetube_webcomponentscore_components.ex"
+                id="toc-core-components-libcuetube_webcomponentscore_components.ex">Core
+                Components
+                (<code>lib/cuetube_web/components/core_components.ex</code>)</a></li>
+            <li><a href="#daisyui" id="toc-daisyui">DaisyUI</a></li>
+            <li><a href="#layouts" id="toc-layouts">Layouts</a></li>
+          </ul>
+        </li>
+        <li><a href="#part-6-the-phone-call-external-apis"
+            id="toc-part-6-the-phone-call-external-apis">Part 6: The Phone Call
+            (External APIs)</a>
+          <ul>
+            <li><a href="#the-tool-req" id="toc-the-tool-req">The Tool:
+                <code>Req</code></a></li>
+            <li><a href="#pattern-matching-api-responses"
+                id="toc-pattern-matching-api-responses">Pattern Matching API
+                Responses</a></li>
+            <li><a href="#keeping-secrets" id="toc-keeping-secrets">Keeping
+                Secrets</a></li>
+            <li><a href="#async-tasks-advanced" id="toc-async-tasks-advanced">Async
+                &amp; Tasks (Advanced)</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <h1 id="from-react-to-phoenix-a-developers-field-guide">From React to
+      Phoenix: A Developer’s Field Guide</h1>
+    <h2 id="the-cuetube-architecture-series">The “Cuetube” Architecture
+      Series</h2>
+    <p><strong>Author:</strong> Cursor AI (Powered by gemini-3-pro-preview)
+      <strong>For:</strong> Steve Meisner <strong>Date:</strong> January 1,
+      2026
+    </p>
+    <hr />
+    <div style="page-break-after: always;">
+
+    </div>
+    <h1 id="part-1-the-blueprint-stack-structure">Part 1: The Blueprint
+      (Stack &amp; Structure)</h1>
+    <p>Welcome! You’ve just inherited a high-performance sports car
+      (Elixir/Phoenix) after driving a reliable sedan (React/Node). It feels
+      different, the steering is tighter, and the engine hums a weird tune.
+      Don’t worry, we’re going to pop the hood.</p>
+    <h2 id="the-30000-foot-view">The 30,000 Foot View</h2>
+    <p>You came from <strong>React + Node + Neon + Drizzle</strong>. You are
+      now in <strong>Phoenix LiveView + Elixir + Postgres + Ecto</strong>.</p>
+    <h3 id="the-big-shift">The Big Shift</h3>
+    <p>In your old stack, you had a “Frontend” (React) and a “Backend”
+      (Node/Express). They lived apart and talked via JSON. In <strong>Phoenix
+        LiveView</strong>, the “Backend” <em>renders</em> the “Frontend” and
+      keeps a persistent connection open. It’s like having the server sit
+      right next to the browser, whispering updates into its ear.</p>
+    <p><strong>Why is this cool?</strong></p>
+    <ul>
+      <li><strong>No API Layer:</strong> You don’t need to build a
+        REST/GraphQL API just to talk to your own frontend.</li>
+      <li><strong>Speed:</strong> Elixir runs on the BEAM (Erlang VM),
+        designed for massive concurrency. It eats parallel tasks for
+        breakfast.</li>
+      <li><strong>Reliability:</strong> “Let it crash.” If a part of your app
+        breaks, it restarts instantly without taking down the whole ship.</li>
+    </ul>
+    <hr />
+    <h2 id="the-kitchen-project-structure">The Kitchen (Project
+      Structure)</h2>
+    <p>Let’s look at the file structure. Think of your app as a professional
+      kitchen.</p>
+    <h3 id="mix.exs-the-shopping-list">1. <code>mix.exs</code> (The Shopping
+      List)</h3>
+    <p>This is your <code>package.json</code>. It defines your app name,
+      version, and most importantly, your <strong>dependencies</strong>
+      (<code>deps</code>).</p>
+    <ul>
+      <li><strong>You’ll see:</strong> <code>{:phoenix, ...}</code>,
+        <code>{:ecto, ...}</code>, <code>{:req, ...}</code>.
+      </li>
+      <li><strong>Command:</strong> <code>mix deps.get</code> (like
+        <code>npm install</code>).
+      </li>
+    </ul>
+    <h3 id="lib-the-recipes">2. <code>lib/</code> (The Recipes)</h3>
+    <p>This is where <em>all</em> your code lives. It’s split into two main
+      folders:</p>
+    <h4 id="a.-libcuetube-the-business-logic">A. <code>lib/cuetube/</code>
+      (The Business Logic)</h4>
+    <p>This is the “Back of House”. It’s where your data, rules, and logic
+      live. It knows <em>nothing</em> about the web, HTML, or HTTP.</p>
+    <ul>
+      <li><strong>Examples:</strong> <code>Accounts</code> (User users),
+        <code>Library</code> (Playlists), <code>YouTube</code> (API
+        client).
+      </li>
+      <li><strong>Key Concept:</strong> <strong>Contexts</strong>. You’ll see
+        files like <code>accounts.ex</code>. This is the <em>public
+          interface</em> for a feature. You don’t query the <code>User</code>
+        table directly from a controller; you call
+        <code>Accounts.get_user!(id)</code>.
+      </li>
+    </ul>
+    <h4 id="b.-libcuetube_web-the-front-of-house">B.
+      <code>lib/cuetube_web/</code> (The Front of House)
+    </h4>
+    <p>This is the “Dining Room”. It handles web requests, renders HTML, and
+      deals with the user.</p>
+    <ul>
+      <li><strong>Examples:</strong> <code>controllers</code>,
+        <code>live</code> (LiveViews), <code>components</code> (UI widgets),
+        <code>router.ex</code>.
+      </li>
+      <li><strong>Key Rule:</strong> The Web layer calls the Business layer.
+        The Business layer <em>never</em> calls the Web layer.</li>
+    </ul>
+    <h3 id="privrepomigrations-the-blueprint-archive">3.
+      <code>priv/repo/migrations</code> (The Blueprint Archive)
+    </h3>
+    <p>This is where your database structure is defined. Unlike Drizzle
+      where you might define schemas and push, Ecto uses specific migration
+      files to alter the DB step-by-step.</p>
+    <hr />
+    <h2 id="the-language-elixir-in-a-nutshell">The Language: Elixir in a
+      Nutshell</h2>
+    <p>Elixir looks like Ruby but acts like… functional magic.</p>
+    <ol type="1">
+      <li>
+        <p><strong>Everything is Immutable:</strong> You can’t change a
+          variable.</p>
+        <pre class="elixir"><code># React/JS
+            let count = 1;
+            count = 2; // Mutated!
+
+            # Elixir
+            count = 1
+            new_count = count + 1 # count is still 1</code></pre>
+      </li>
+      <li>
+        <p><strong>The Pipe Operator <code>|&gt;</code>:</strong> This is
+          the best thing ever. It passes the result of the previous function as
+          the <em>first argument</em> of the next function.</p>
+        <pre class="elixir"><code># Nested (Hard to read)
+            serve(cook(chop(onion)))
+
+            # Pipe (Chef&#39;s kiss)
+            onion
+            |&gt; chop()
+            |&gt; cook()
+            |&gt; serve()</code></pre>
+      </li>
+      <li>
+        <p><strong>Pattern Matching:</strong> The <code>=</code> sign isn’t
+          just assignment; it’s a match.</p>
+        <pre class="elixir"><code>{:ok, user} = Accounts.create_user(params)
+            # If create_user returns {:error, ...}, this line CRASHES (or raises).
+            # It forces you to handle success/failure explicitly.</code></pre>
+      </li>
+    </ol>
+    <hr />
+    <h2 id="your-first-mission">Your First Mission</h2>
+    <p>Open <code>lib/cuetube_web/router.ex</code>. This is the Maître D’.
+      It greets every request and decides where it sits. We’ll explore that
+      next.</p>
+    <div style="page-break-after: always;">
+
+    </div>
+    <h1 id="part-2-the-vault-data-ecto">Part 2: The Vault (Data &amp;
+      Ecto)</h1>
+    <p>In your old stack, you used <strong>Drizzle</strong>. Here, we use
+      <strong>Ecto</strong>. Ecto is not just an ORM; it’s a data mapping and
+      validation toolkit. It separates “Data Representation” (Schemas) from
+      “Database Interaction” (Repo).
+    </p>
+    <h2 id="the-schema-libcuetubeaccountsuser.ex">The Schema:
+      <code>lib/cuetube/accounts/user.ex</code>
+    </h2>
+    <p>Open this file. This defines what a “User” looks like in Elixir
+      struct form.</p>
+    <pre class="elixir"><code>defmodule Cuetube.Accounts.User do
+        use Ecto.Schema
+        import Ecto.Changeset
+
+        schema &quot;users&quot; do
+        field :email, :string
+        field :handle, :string
+        # ... other fields
+        has_many :playlists, Cuetube.Library.Playlist
+
+        timestamps()
+        end</code></pre>
+    <h3 id="whats-happening">What’s happening?</h3>
+    <ol type="1">
+      <li><strong><code>schema "users"</code></strong>: Maps this module to
+        the <code>users</code> table in Postgres.</li>
+      <li><strong><code>field</code></strong>: Defines the properties. Note
+        that <code>:string</code> covers <code>varchar</code>,
+        <code>text</code>, etc.
+      </li>
+      <li><strong><code>has_many</code></strong>: Defines the relationship. A
+        user has many playlists.</li>
+    </ol>
+    <h2 id="the-bouncer-changesets">The Bouncer: Changesets</h2>
+    <p>Below the schema, you’ll usually see a <code>changeset</code>
+      function. This is unique to Ecto. In many frameworks, you validate data
+      in the controller or a separate validator. In Ecto, <strong>validation
+        happens on the data structure itself</strong>.</p>
+    <pre class="elixir"><code>def changeset(user, attrs) do
+        user
+        |&gt; cast(attrs, [:email, :handle, ...])
+        |&gt; validate_required([:email])
+        |&gt; unique_constraint(:email)
+        end</code></pre>
+    <ul>
+      <li><strong><code>cast</code></strong>: “I accept these fields from the
+        outside world (forms/API) and map them to the struct.” safely.</li>
+      <li><strong><code>validate_...</code></strong>: Runs logic checks
+        (length, format).</li>
+      <li><strong><code>unique_constraint</code></strong>: Checks the
+        <em>database</em> index to ensure uniqueness (no race conditions!).
+      </li>
+    </ul>
+    <h2 id="the-repo-the-context">The Repo &amp; The Context</h2>
+    <p>Ecto splits the definition (<code>User</code>) from the action
+      (<code>Repo</code>). To save a user, you don’t do
+      <code>user.save()</code>. You do <code>Repo.insert(user)</code>.
+    </p>
+    <p>However, in a Phoenix app, we wrap these raw Repo calls in a
+      <strong>Context</strong>. Look at
+      <code>lib/cuetube/accounts.ex</code>.
+    </p>
+    <pre class="elixir"><code>defmodule Cuetube.Accounts do
+        alias Cuetube.Repo
+        alias Cuetube.Accounts.User
+
+        def get_user!(id), do: Repo.get!(User, id)
+
+        def create_user(attrs) do
+        %User{}
+        |&gt; User.changeset(attrs)
+        |&gt; Repo.insert()
+        end
+        end</code></pre>
+    <h3 id="why-contexts">Why Contexts?</h3>
+    <p>It creates a <strong>Public API</strong> for your domain.</p>
+    <ul>
+      <li>Your web controllers don’t need to know <em>how</em> to build a user
+        changeset or which Repo functions to call.</li>
+      <li>They just call <code>Accounts.create_user(params)</code>.</li>
+      <li>If you swap Postgres for something else later, or add complex logic
+        (like sending a welcome email on creation), you change it <em>here</em>,
+        not in every controller.</li>
+    </ul>
+    <h2 id="summary">Summary</h2>
+    <ul>
+      <li><strong>Schema (<code>User</code>)</strong>: Defines the shape of
+        data.</li>
+      <li><strong>Changeset</strong>: Validates and prepares data for the
+        DB.</li>
+      <li><strong>Repo</strong>: Talks to the database.</li>
+      <li><strong>Context (<code>Accounts</code>)</strong>: The friendly
+        manager that coordinates everything.</li>
+    </ul>
+    <div style="page-break-after: always;">
+
+    </div>
+    <h1 id="part-3-the-traffic-controller-router-request">Part 3: The
+      Traffic Controller (Router &amp; Request)</h1>
+    <p>The file <code>lib/cuetube_web/router.ex</code> is the central
+      nervous system of your web layer.</p>
+    <h2 id="the-pipeline-the-assembly-line">The Pipeline (The Assembly
+      Line)</h2>
+    <p>Web requests are just data. Phoenix treats a request (called
+      <code>conn</code> for connection) as a struct that gets passed through a
+      series of functions. Each function modifies it slightly. This is called
+      a <strong>Pipeline</strong>.
+    </p>
+    <pre class="elixir"><code>pipeline :browser do
+        plug :accepts, [&quot;html&quot;]
+        plug :fetch_session
+        plug :put_root_layout, html: {CuetubeWeb.Layouts, :root}
+        plug CuetubeWeb.UserAuth, :fetch_current_user
+        end</code></pre>
+    <ol type="1">
+      <li><strong><code>plug :accepts</code></strong>: “I only speak HTML
+        here.”</li>
+      <li><strong><code>plug :fetch_session</code></strong>: “Go get the
+        cookie jar.”</li>
+      <li><strong><code>plug :fetch_current_user</code></strong>: This is
+        custom! It looks at the session, finds the <code>user_token</code>,
+        looks up the user in the DB, and assigns it to
+        <code>conn.assigns.current_user</code>. Now <em>every</em> page knowns
+        who is logged in.
+      </li>
+    </ol>
+    <h2 id="scopes-the-vip-sections">Scopes (The VIP Sections)</h2>
+    <p>Scopes group routes together and apply pipelines to them.</p>
+    <pre class="elixir"><code>scope &quot;/&quot;, CuetubeWeb do
+        pipe_through :browser
+
+        live_session :public, on_mount: [{CuetubeWeb.UserAuth, :mount_current_user}] do
+        live &quot;/&quot;, HomeLive
+        end
+
+        live_session :authenticated, on_mount: [{CuetubeWeb.UserAuth, :ensure_authenticated}] do
+        live &quot;/dashboard&quot;, DashboardLive
+        end
+        end</code></pre>
+    <h3 id="what-is-live_session">What is <code>live_session</code>?</h3>
+    <p>This is crucial for LiveView. When you navigate between pages in a
+      <code>live_session</code>, the connection <strong>stays open</strong>.
+      It’s super fast.
+    </p>
+    <ul>
+      <li><strong>:public</strong>: Anyone can be here. We run
+        <code>:mount_current_user</code> just to check <em>if</em> they are
+        logged in, but we don’t kick them out if they aren’t.
+      </li>
+      <li><strong>:authenticated</strong>: The Bouncer. We run
+        <code>:ensure_authenticated</code>. If they aren’t logged in, this plug
+        halts the request and redirects them to login.
+      </li>
+    </ul>
+    <h2 id="the-dead-view-vs.-liveview">The “Dead” View vs. LiveView</h2>
+    <p>You’ll see some routes use <code>get</code> (standard HTTP) and some
+      use <code>live</code> (LiveView).</p>
+    <ul>
+      <li><strong><code>get "/auth/:provider", AuthController, :request</code></strong>:
+        This is a standard HTTP request. It hits the server, the server renders
+        HTML (or redirects), and the connection closes. Used for OAuth because
+        OAuth requires full page redirects.</li>
+      <li><strong><code>live "/dashboard", DashboardLive</code></strong>: This
+        loads a page, then establishes a WebSocket. It stays alive.</li>
+    </ul>
+    <h2 id="the-auth-flow-oauth">The Auth Flow (OAuth)</h2>
+    <ol type="1">
+      <li>User clicks “Login with Google”.</li>
+      <li>Router hits <code>AuthController.request</code> -&gt; redirects to
+        Google.</li>
+      <li>Google redirects back to <code>AuthController.callback</code>.</li>
+      <li>Controller grabs the user info, finds/creates the user in
+        <code>Accounts</code>, puts the user ID in the session, and redirects to
+        <code>/dashboard</code>.
+      </li>
+      <li>User hits <code>/dashboard</code>. The
+        <code>live_session :authenticated</code> sees the ID in the session and
+        lets them in.
+      </li>
+    </ol>
+    <div style="page-break-after: always;">
+
+    </div>
+    <h1 id="part-4-the-heartbeat-liveview-basics">Part 4: The Heartbeat
+      (LiveView Basics)</h1>
+    <p>This is the main event. LiveView allows you to write interactive UI
+      (like React) entirely in Elixir.</p>
+    <p>Let’s dissect
+      <code>lib/cuetube_web/live/dashboard_live.ex</code>.
+    </p>
+    <h2 id="the-connection-lifecycle">The Connection Lifecycle</h2>
+    <p>A LiveView has a very specific lifecycle.</p>
+    <h3 id="mountparams-session-socket">1.
+      <code>mount(params, session, socket)</code>
+    </h3>
+    <p>This is the constructor. It runs <strong>twice</strong>:</p>
+    <ol type="1">
+      <li>Once on the initial HTTP request (to render the HTML for SEO and
+        speed).</li>
+      <li>Once again when the WebSocket connects (to become interactive).</li>
+    </ol>
+    <pre class="elixir"><code>def mount(_params, _session, socket) do
+        user_id = socket.assigns.current_user.id
+        playlists = Library.list_user_playlists(user_id)
+
+        {:ok, assign(socket, playlists: playlists)}
+        end</code></pre>
+    <ul>
+      <li><strong><code>socket</code></strong>: This is your state (like
+        <code>this.state</code> or <code>useState</code>).
+      </li>
+      <li><strong><code>assign(socket, key: value)</code></strong>: This sets
+        state. Here we fetch the user’s playlists and store them in the
+        socket.</li>
+    </ul>
+    <h3 id="renderassigns">2. <code>render(assigns)</code></h3>
+    <p>This is your JSX. It takes the state (<code>assigns</code>) and
+      returns HTML. In Phoenix 1.7+, this is often inside the <code>.ex</code>
+      file using the <code>~H</code> (Heex) sigil.</p>
+    <pre class="elixir"><code>def render(assigns) do
+        ~H&quot;&quot;&quot;
+        &lt;Layouts.app flash={@flash} current_user={@current_user}&gt;
+        &lt;h1&gt;My Playlists&lt;/h1&gt;
+        &lt;%= for playlist &lt;- @playlists do %&gt;
+        &lt;.playlist_card playlist={playlist} /&gt;
+        &lt;% end %&gt;
+        &lt;/Layouts.app&gt;
+        &quot;&quot;&quot;
+        end</code></pre>
+    <ul>
+      <li><strong><code>&lt;%= ... %&gt;</code></strong>: Executes Elixir code
+        (loops, logic).</li>
+      <li><strong><code>@playlists</code></strong>: Accessing the state we set
+        in <code>mount</code>.</li>
+      <li><strong><code>&lt;.playlist_card&gt;</code></strong>: A Function
+        Component (like a React component).</li>
+    </ul>
+    <h2 id="interactivity-events">Interactivity (Events)</h2>
+    <p>How do you handle a click?</p>
+    <h3 id="the-template">The Template</h3>
+    <pre class="html"><code>&lt;button phx-click=&quot;delete_playlist&quot;
+        phx-value-id=&quot;{playlist.id}&quot;&gt;Delete&lt;/button&gt;</code></pre>
+    <ul>
+      <li><strong><code>phx-click</code></strong>: The event name.</li>
+      <li><strong><code>phx-value-id</code></strong>: Passes data
+        (<code>id</code>) to the event.</li>
+    </ul>
+    <h3 id="the-handler">The Handler</h3>
+    <p>Back in the <code>.ex</code> file:</p>
+    <pre class="elixir"><code>def handle_event(&quot;delete_playlist&quot;, %{&quot;id&quot; =&gt;
+        id}, socket) do
+        Library.delete_playlist!(id)
+
+        # Update the list!
+        playlists = Library.list_user_playlists(socket.assigns.current_user.id)
+
+        {:noreply, assign(socket, playlists: playlists)}
+        end</code></pre>
+    <ol type="1">
+      <li>User clicks.</li>
+      <li>“delete_playlist” is sent over the WebSocket.</li>
+      <li><code>handle_event</code> runs on the server.</li>
+      <li>We delete the item in the DB.</li>
+      <li>We update the <code>socket</code> with the new list.</li>
+      <li><strong>Magic:</strong> LiveView calculates the <em>diff</em> (only
+        the deleted item is removed) and sends a tiny patch to the browser. The
+        DOM updates.</li>
+    </ol>
+    <h2 id="no-api-needed">No API Needed</h2>
+    <p>Notice what we didn’t do?</p>
+    <ul>
+      <li>We didn’t write a <code>DELETE /api/playlists/:id</code>
+        endpoint.</li>
+      <li>We didn’t write a <code>fetch()</code> call in JS.</li>
+      <li>We didn’t handle loading states or JSON parsing.</li>
+    </ul>
+    <p>We just changed the server state, and the UI updated.</p>
+    <div style="page-break-after: always;">
+
+    </div>
+    <h1 id="part-5-the-face-ui-components">Part 5: The Face (UI &amp;
+      Components)</h1>
+    <p>Your app uses <strong>Tailwind CSS</strong> and <strong>HEEx</strong>
+      (HTML + EEx).</p>
+    <h2 id="heex-html-elixir">HEEx (HTML + Elixir)</h2>
+    <p>The <code>~H</code> syntax is strict. It forces you to write valid
+      HTML.</p>
+    <ul>
+      <li><strong>Interpolation:</strong> Use <code>{ @variable }</code>
+        (Phoenix 1.8+) or <code>&lt;%= @variable %&gt;</code> to output
+        data.</li>
+      <li><strong>Attributes:</strong>
+        <code>&lt;div class={@my_class}&gt;</code> allows dynamic values.
+      </li>
+    </ul>
+    <h2 id="core-components-libcuetube_webcomponentscore_components.ex">Core
+      Components
+      (<code>lib/cuetube_web/components/core_components.ex</code>)</h2>
+    <p>This file is a goldmine. It contains reusable UI elements like
+      <code>input</code>, <code>modal</code>, <code>table</code>, and
+      <code>button</code>. It’s generated by Phoenix but you own it. You can
+      change the Tailwind classes here to change the look of your
+      <em>entire</em> app.
+    </p>
+    <h3 id="anatomy-of-a-component">Anatomy of a Component</h3>
+    <pre class="elixir"><code>attr :variant, :string, default: &quot;primary&quot; # Props
+        definition
+        attr :class, :any, default: nil
+        slot :inner_block, required: true # Children
+
+        def button(assigns) do
+        ~H&quot;&quot;&quot;
+        &lt;button class={[
+        &quot;btn&quot;,
+        @variant == &quot;primary&quot; &amp;&amp; &quot;btn-primary&quot;,
+        @class
+        ]}&gt;
+        {render_slot(@inner_block)}
+        &lt;/button&gt;
+        &quot;&quot;&quot;
+        end</code></pre>
+    <ul>
+      <li><strong><code>attr</code></strong>: Defines what props the component
+        accepts. It’s like TypeScript interfaces for your templates.</li>
+      <li><strong><code>slot</code></strong>: Where the children go.
+        <code>&lt;.button&gt;Click Me&lt;/.button&gt;</code> -&gt; “Click Me”
+        goes into <code>inner_block</code>.
+      </li>
+    </ul>
+    <h3 id="usage">Usage</h3>
+    <p>In your LiveViews, you use them with a dot prefix:</p>
+    <pre class="html"><code>&lt;.button variant=&quot;secondary&quot;
+        phx-click=&quot;cancel&quot;&gt;
+        Cancel
+        &lt;/.button&gt;</code></pre>
+    <h2 id="daisyui">DaisyUI</h2>
+    <p>Your <code>assets/css/app.scss</code> imports DaisyUI (via the
+      config). This gives you classes like <code>btn</code>,
+      <code>card</code>, <code>input</code>. You don’t need to write 50
+      utility classes for a button. <code>class="btn btn-primary"</code> does
+      the heavy lifting.
+    </p>
+    <h2 id="layouts">Layouts</h2>
+    <code>lib/cuetube_web/components/layouts/root.html.heex</code> is the
+    skeleton (
+    <html>
+      ,
+
+      <head>
+        ,
+
+      <body>
+        <p>). <code>lib/cuetube_web/components/layouts/app.html.heex</code> is
+          the wrapper for your main content (Navigation bar, Flash messages).</p>
+        <p>When <code>DashboardLive</code> renders, it’s injected
+          <em>inside</em> <code>app.html.heex</code>, which is inside
+          <code>root.html.heex</code>.
+        </p>
+        <div style="page-break-after: always;">
+
+        </div>
+        <h1 id="part-6-the-phone-call-external-apis">Part 6: The Phone Call
+          (External APIs)</h1>
+        <p>You mentioned fetching data (YouTube). Let’s see how that works in
+          <code>lib/cuetube/youtube/client.ex</code>.
+        </p>
+        <h2 id="the-tool-req">The Tool: <code>Req</code></h2>
+        <p>We use a library called <code>Req</code>. It’s the standard HTTP
+          client now. It’s high-level and easy to use.</p>
+        <pre class="elixir"><code>def get_playlist_details(playlist_id) do
+            req()
+            |&gt; Req.get(url: &quot;/playlists&quot;, params: [id: playlist_id, part:
+            &quot;snippet&quot;])
+            |&gt; handle_response(...)
+            end</code></pre>
+        <h2 id="pattern-matching-api-responses">Pattern Matching API
+          Responses</h2>
+        <p>One of the coolest things in Elixir is handling JSON responses.</p>
+        <pre class="elixir"><code>defp handle_response(result) do
+            case result do
+            # 1. Success! Pattern match the 200 OK and the body
+            {:ok, %{status: 200, body: body}} -&gt;
+            {:ok, parse_body(body)}
+
+            # 2. API Error (404, 500)
+            {:ok, %{status: status}} -&gt;
+            {:error, &quot;YouTube said no: #{status}&quot;}
+
+            # 3. Network Error (DNS failed, timeout)
+            {:error, reason} -&gt;
+            {:error, &quot;Internet broken: #{inspect(reason)}&quot;}
+            end
+            end</code></pre>
+        <p>This forces you to handle every scenario. You can’t accidentally
+          ignore a 404.</p>
+        <h2 id="keeping-secrets">Keeping Secrets</h2>
+        <p>Notice <code>Application.get_env(:cuetube, :youtube_api_key)</code>.
+          We <strong>never</strong> hardcode API keys. They live in
+          <code>config/runtime.exs</code>, which reads them from environment
+          variables (<code>System.get_env("YOUTUBE_API_KEY")</code>).
+        </p>
+        <h2 id="async-tasks-advanced">Async &amp; Tasks (Advanced)</h2>
+        <p>If fetching a playlist takes 5 seconds, you don’t want to freeze the
+          user’s browser. In LiveView, you can do this:</p>
+        <ol type="1">
+          <li><strong>Mount:</strong> Render the page with a “Loading…”
+            spinner.</li>
+          <li><strong>Async:</strong> Kick off a background task to fetch from
+            YouTube.</li>
+          <li><strong>Receive:</strong> When the task finishes, it sends a message
+            to the LiveView.</li>
+          <li><strong>Update:</strong> The LiveView updates the state with the
+            data and the spinner disappears.</li>
+        </ol>
+        <p>This is powered by the BEAM’s lightweight processes. You can spawn
+          thousands of these tasks without sweating.</p>
+      </body>
+
+    </html>
