@@ -54,7 +54,7 @@ You don't need to write 50 utility classes for a button. `class="btn btn-primary
 
 ## Layouts
 
-`lib/cuetube_web/components/layouts/root.html.heex` is the skeleton (<html>, <head>, <body>).
+`lib/cuetube_web/components/layouts/root.html.heex` is the skeleton (`<html>`, `<head>`, `<body>`).
 `lib/cuetube_web/components/layouts/app.html.heex` is the wrapper for your main content (Navigation bar, Flash messages).
 
 When `DashboardLive` renders, it's injected _inside_ `app.html.heex`, which is inside `root.html.heex`.

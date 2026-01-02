@@ -45,6 +45,16 @@ When you navigate between pages in a `live_session`, the connection **stays open
 - **:public**: Anyone can be here. We run `:mount_current_user` just to check _if_ they are logged in, but we don't kick them out if they aren't.
 - **:authenticated**: The Bouncer. We run `:ensure_authenticated`. If they aren't logged in, this plug halts the request and redirects them to login.
 
+## The "Verified Routes" (~p)
+
+You might see this weird syntax: `~p"/dashboard"`.
+This is a **sigil** (like regex `~r/.../`). It checks your routes at **compile time**.
+
+- **Good:** `~p"/thumbnails/#{video_id}"` -> interpolates the ID and ensures the route exists.
+- **Bad:** `~p"/thumnails/#{id}"` -> **COMPILER ERROR!** (Typo detected).
+
+In React, you often have broken links that you only find when you click them. In Phoenix, if you change a route in `router.ex` but forget to update a link, the app won't even compile.
+
 ## The "Dead" View vs. LiveView
 
 You'll see some routes use `get` (standard HTTP) and some use `live` (LiveView).

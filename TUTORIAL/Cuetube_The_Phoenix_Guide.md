@@ -246,6 +246,16 @@ When you navigate between pages in a `live_session`, the connection **stays open
 - **:public**: Anyone can be here. We run `:mount_current_user` just to check _if_ they are logged in, but we don't kick them out if they aren't.
 - **:authenticated**: The Bouncer. We run `:ensure_authenticated`. If they aren't logged in, this plug halts the request and redirects them to login.
 
+## The "Verified Routes" (~p)
+
+You might see this weird syntax: `~p"/dashboard"`.
+This is a **sigil** (like regex `~r/.../`). It checks your routes at **compile time**.
+
+- **Good:** `~p"/thumbnails/#{video_id}"` -> interpolates the ID and ensures the route exists.
+- **Bad:** `~p"/thumnails/#{id}"` -> **COMPILER ERROR!** (Typo detected).
+
+In React, you often have broken links that you only find when you click them. In Phoenix, if you change a route in `router.ex` but forget to update a link, the app won't even compile.
+
 ## The "Dead" View vs. LiveView
 
 You'll see some routes use `get` (standard HTTP) and some use `live` (LiveView).
@@ -417,7 +427,7 @@ You don't need to write 50 utility classes for a button. `class="btn btn-primary
 
 ## Layouts
 
-`lib/cuetube_web/components/layouts/root.html.heex` is the skeleton (<html>, <head>, <body>).
+`lib/cuetube_web/components/layouts/root.html.heex` is the skeleton (`<html>`, `<head>`, `<body>`).
 `lib/cuetube_web/components/layouts/app.html.heex` is the wrapper for your main content (Navigation bar, Flash messages).
 
 When `DashboardLive` renders, it's injected _inside_ `app.html.heex`, which is inside `root.html.heex`.
@@ -480,3 +490,35 @@ In LiveView, you can do this:
 4.  **Update:** The LiveView updates the state with the data and the spinner disappears.
 
 This is powered by the BEAM's lightweight processes. You can spawn thousands of these tasks without sweating.
+
+## Bonus: Proxying Images (`ThumbnailController`)
+
+Sometimes you need to serve external assets (like YouTube thumbnails) but you want to control caching or avoid mixed-content warnings.
+You recently added `lib/cuetube_web/controllers/thumbnail_controller.ex`.
+
+```elixir
+def show(conn, %{"video_id" => video_id}) do
+  url = "https://i.ytimg.com/vi/#{video_id}/hqdefault.jpg"
+
+  case Req.get(url) do
+    {:ok, %{status: 200, body: body, headers: headers}} ->
+      content_type = Map.get(headers, "content-type") |> List.first()
+
+      conn
+      |> put_resp_content_type(content_type)
+      |> put_resp_header("cache-control", "public, max-age=604800")
+      |> send_resp(200, body)
+
+    _ -> send_resp(conn, 404, "Not Found")
+  end
+end
+```
+
+### Why use a Controller here?
+
+LiveView is great for HTML, but Controllers are still king for **binary data** (images, downloads, APIs).
+By proxying through `Req`, we:
+
+1.  **Hide the source:** The user sees `/thumbnails/xyz`, not `google.com`.
+2.  **Cache it:** We set `cache-control` to 1 week.
+3.  **Prevent Tracking:** Users don't ping YouTube's servers just by loading your dashboard.

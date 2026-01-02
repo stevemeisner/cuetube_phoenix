@@ -481,10 +481,10 @@
       <ul>
         <li><a href="#from-react-to-phoenix-a-developers-field-guide"
             id="toc-from-react-to-phoenix-a-developers-field-guide">From React to
-            Phoenix: A Developer’s Field Guide</a>
+            Phoenix: A Developer's Field Guide</a>
           <ul>
             <li><a href="#the-cuetube-architecture-series"
-                id="toc-the-cuetube-architecture-series">The “Cuetube” Architecture
+                id="toc-the-cuetube-architecture-series">The "Cuetube" Architecture
                 Series</a></li>
           </ul>
         </li>
@@ -527,9 +527,11 @@
                 Line)</a></li>
             <li><a href="#scopes-the-vip-sections" id="toc-scopes-the-vip-sections">Scopes (The VIP
                 Sections)</a></li>
-            <li><a href="#the-dead-view-vs.-liveview" id="toc-the-dead-view-vs.-liveview">The “Dead”
-                View
-                vs. LiveView</a></li>
+            <li><a href="#the-verified-routes-p" id="toc-the-verified-routes-p">The
+                "Verified Routes" (~p)</a></li>
+            <li><a href="#the-dead-view-vs.-liveview" id="toc-the-dead-view-vs.-liveview">The "Dead"
+                View vs.
+                LiveView</a></li>
             <li><a href="#the-auth-flow-oauth" id="toc-the-auth-flow-oauth">The Auth
                 Flow (OAuth)</a></li>
           </ul>
@@ -573,13 +575,16 @@
                 Secrets</a></li>
             <li><a href="#async-tasks-advanced" id="toc-async-tasks-advanced">Async
                 &amp; Tasks (Advanced)</a></li>
+            <li><a href="#bonus-proxying-images-thumbnailcontroller"
+                id="toc-bonus-proxying-images-thumbnailcontroller">Bonus: Proxying
+                Images (<code>ThumbnailController</code>)</a></li>
           </ul>
         </li>
       </ul>
     </nav>
     <h1 id="from-react-to-phoenix-a-developers-field-guide">From React to
-      Phoenix: A Developer’s Field Guide</h1>
-    <h2 id="the-cuetube-architecture-series">The “Cuetube” Architecture
+      Phoenix: A Developer's Field Guide</h1>
+    <h2 id="the-cuetube-architecture-series">The "Cuetube" Architecture
       Series</h2>
     <p><strong>Author:</strong> Cursor AI (Powered by gemini-3-pro-preview)
       <strong>For:</strong> Steve Meisner <strong>Date:</strong> January 1,
@@ -591,33 +596,33 @@
     </div>
     <h1 id="part-1-the-blueprint-stack-structure">Part 1: The Blueprint
       (Stack &amp; Structure)</h1>
-    <p>Welcome! You’ve just inherited a high-performance sports car
+    <p>Welcome! You've just inherited a high-performance sports car
       (Elixir/Phoenix) after driving a reliable sedan (React/Node). It feels
       different, the steering is tighter, and the engine hums a weird tune.
-      Don’t worry, we’re going to pop the hood.</p>
+      Don't worry, we're going to pop the hood.</p>
     <h2 id="the-30000-foot-view">The 30,000 Foot View</h2>
     <p>You came from <strong>React + Node + Neon + Drizzle</strong>. You are
       now in <strong>Phoenix LiveView + Elixir + Postgres + Ecto</strong>.</p>
     <h3 id="the-big-shift">The Big Shift</h3>
-    <p>In your old stack, you had a “Frontend” (React) and a “Backend”
+    <p>In your old stack, you had a "Frontend" (React) and a "Backend"
       (Node/Express). They lived apart and talked via JSON. In <strong>Phoenix
-        LiveView</strong>, the “Backend” <em>renders</em> the “Frontend” and
-      keeps a persistent connection open. It’s like having the server sit
+        LiveView</strong>, the "Backend" <em>renders</em> the "Frontend" and
+      keeps a persistent connection open. It's like having the server sit
       right next to the browser, whispering updates into its ear.</p>
     <p><strong>Why is this cool?</strong></p>
     <ul>
-      <li><strong>No API Layer:</strong> You don’t need to build a
+      <li><strong>No API Layer:</strong> You don't need to build a
         REST/GraphQL API just to talk to your own frontend.</li>
       <li><strong>Speed:</strong> Elixir runs on the BEAM (Erlang VM),
         designed for massive concurrency. It eats parallel tasks for
         breakfast.</li>
-      <li><strong>Reliability:</strong> “Let it crash.” If a part of your app
+      <li><strong>Reliability:</strong> "Let it crash." If a part of your app
         breaks, it restarts instantly without taking down the whole ship.</li>
     </ul>
     <hr />
     <h2 id="the-kitchen-project-structure">The Kitchen (Project
       Structure)</h2>
-    <p>Let’s look at the file structure. Think of your app as a professional
+    <p>Let's look at the file structure. Think of your app as a professional
       kitchen.</p>
     <h3 id="mix.exs-the-shopping-list">1. <code>mix.exs</code> (The Shopping
       List)</h3>
@@ -625,7 +630,7 @@
       version, and most importantly, your <strong>dependencies</strong>
       (<code>deps</code>).</p>
     <ul>
-      <li><strong>You’ll see:</strong> <code>{:phoenix, ...}</code>,
+      <li><strong>You'll see:</strong> <code>{:phoenix, ...}</code>,
         <code>{:ecto, ...}</code>, <code>{:req, ...}</code>.
       </li>
       <li><strong>Command:</strong> <code>mix deps.get</code> (like
@@ -633,20 +638,20 @@
       </li>
     </ul>
     <h3 id="lib-the-recipes">2. <code>lib/</code> (The Recipes)</h3>
-    <p>This is where <em>all</em> your code lives. It’s split into two main
+    <p>This is where <em>all</em> your code lives. It's split into two main
       folders:</p>
     <h4 id="a.-libcuetube-the-business-logic">A. <code>lib/cuetube/</code>
       (The Business Logic)</h4>
-    <p>This is the “Back of House”. It’s where your data, rules, and logic
+    <p>This is the "Back of House". It's where your data, rules, and logic
       live. It knows <em>nothing</em> about the web, HTML, or HTTP.</p>
     <ul>
       <li><strong>Examples:</strong> <code>Accounts</code> (User users),
         <code>Library</code> (Playlists), <code>YouTube</code> (API
         client).
       </li>
-      <li><strong>Key Concept:</strong> <strong>Contexts</strong>. You’ll see
+      <li><strong>Key Concept:</strong> <strong>Contexts</strong>. You'll see
         files like <code>accounts.ex</code>. This is the <em>public
-          interface</em> for a feature. You don’t query the <code>User</code>
+          interface</em> for a feature. You don't query the <code>User</code>
         table directly from a controller; you call
         <code>Accounts.get_user!(id)</code>.
       </li>
@@ -654,7 +659,7 @@
     <h4 id="b.-libcuetube_web-the-front-of-house">B.
       <code>lib/cuetube_web/</code> (The Front of House)
     </h4>
-    <p>This is the “Dining Room”. It handles web requests, renders HTML, and
+    <p>This is the "Dining Room". It handles web requests, renders HTML, and
       deals with the user.</p>
     <ul>
       <li><strong>Examples:</strong> <code>controllers</code>,
@@ -673,10 +678,10 @@
     <hr />
     <h2 id="the-language-elixir-in-a-nutshell">The Language: Elixir in a
       Nutshell</h2>
-    <p>Elixir looks like Ruby but acts like… functional magic.</p>
+    <p>Elixir looks like Ruby but acts like... functional magic.</p>
     <ol type="1">
       <li>
-        <p><strong>Everything is Immutable:</strong> You can’t change a
+        <p><strong>Everything is Immutable:</strong> You can't change a
           variable.</p>
         <pre class="elixir"><code># React/JS
             let count = 1;
@@ -700,8 +705,8 @@
             |&gt; serve()</code></pre>
       </li>
       <li>
-        <p><strong>Pattern Matching:</strong> The <code>=</code> sign isn’t
-          just assignment; it’s a match.</p>
+        <p><strong>Pattern Matching:</strong> The <code>=</code> sign isn't
+          just assignment; it's a match.</p>
         <pre class="elixir"><code>{:ok, user} = Accounts.create_user(params)
             # If create_user returns {:error, ...}, this line CRASHES (or raises).
             # It forces you to handle success/failure explicitly.</code></pre>
@@ -709,8 +714,8 @@
     </ol>
     <hr />
     <h2 id="your-first-mission">Your First Mission</h2>
-    <p>Open <code>lib/cuetube_web/router.ex</code>. This is the Maître D’.
-      It greets every request and decides where it sits. We’ll explore that
+    <p>Open <code>lib/cuetube_web/router.ex</code>. This is the Maître D'.
+      It greets every request and decides where it sits. We'll explore that
       next.</p>
     <div style="page-break-after: always;">
 
@@ -718,14 +723,14 @@
     <h1 id="part-2-the-vault-data-ecto">Part 2: The Vault (Data &amp;
       Ecto)</h1>
     <p>In your old stack, you used <strong>Drizzle</strong>. Here, we use
-      <strong>Ecto</strong>. Ecto is not just an ORM; it’s a data mapping and
-      validation toolkit. It separates “Data Representation” (Schemas) from
-      “Database Interaction” (Repo).
+      <strong>Ecto</strong>. Ecto is not just an ORM; it's a data mapping and
+      validation toolkit. It separates "Data Representation" (Schemas) from
+      "Database Interaction" (Repo).
     </p>
     <h2 id="the-schema-libcuetubeaccountsuser.ex">The Schema:
       <code>lib/cuetube/accounts/user.ex</code>
     </h2>
-    <p>Open this file. This defines what a “User” looks like in Elixir
+    <p>Open this file. This defines what a "User" looks like in Elixir
       struct form.</p>
     <pre class="elixir"><code>defmodule Cuetube.Accounts.User do
         use Ecto.Schema
@@ -739,7 +744,7 @@
 
         timestamps()
         end</code></pre>
-    <h3 id="whats-happening">What’s happening?</h3>
+    <h3 id="whats-happening">What's happening?</h3>
     <ol type="1">
       <li><strong><code>schema "users"</code></strong>: Maps this module to
         the <code>users</code> table in Postgres.</li>
@@ -751,7 +756,7 @@
         user has many playlists.</li>
     </ol>
     <h2 id="the-bouncer-changesets">The Bouncer: Changesets</h2>
-    <p>Below the schema, you’ll usually see a <code>changeset</code>
+    <p>Below the schema, you'll usually see a <code>changeset</code>
       function. This is unique to Ecto. In many frameworks, you validate data
       in the controller or a separate validator. In Ecto, <strong>validation
         happens on the data structure itself</strong>.</p>
@@ -762,8 +767,8 @@
         |&gt; unique_constraint(:email)
         end</code></pre>
     <ul>
-      <li><strong><code>cast</code></strong>: “I accept these fields from the
-        outside world (forms/API) and map them to the struct.” safely.</li>
+      <li><strong><code>cast</code></strong>: "I accept these fields from the
+        outside world (forms/API) and map them to the struct." safely.</li>
       <li><strong><code>validate_...</code></strong>: Runs logic checks
         (length, format).</li>
       <li><strong><code>unique_constraint</code></strong>: Checks the
@@ -772,7 +777,7 @@
     </ul>
     <h2 id="the-repo-the-context">The Repo &amp; The Context</h2>
     <p>Ecto splits the definition (<code>User</code>) from the action
-      (<code>Repo</code>). To save a user, you don’t do
+      (<code>Repo</code>). To save a user, you don't do
       <code>user.save()</code>. You do <code>Repo.insert(user)</code>.
     </p>
     <p>However, in a Phoenix app, we wrap these raw Repo calls in a
@@ -794,7 +799,7 @@
     <h3 id="why-contexts">Why Contexts?</h3>
     <p>It creates a <strong>Public API</strong> for your domain.</p>
     <ul>
-      <li>Your web controllers don’t need to know <em>how</em> to build a user
+      <li>Your web controllers don't need to know <em>how</em> to build a user
         changeset or which Repo functions to call.</li>
       <li>They just call <code>Accounts.create_user(params)</code>.</li>
       <li>If you swap Postgres for something else later, or add complex logic
@@ -832,10 +837,10 @@
         plug CuetubeWeb.UserAuth, :fetch_current_user
         end</code></pre>
     <ol type="1">
-      <li><strong><code>plug :accepts</code></strong>: “I only speak HTML
-        here.”</li>
-      <li><strong><code>plug :fetch_session</code></strong>: “Go get the
-        cookie jar.”</li>
+      <li><strong><code>plug :accepts</code></strong>: "I only speak HTML
+        here."</li>
+      <li><strong><code>plug :fetch_session</code></strong>: "Go get the
+        cookie jar."</li>
       <li><strong><code>plug :fetch_current_user</code></strong>: This is
         custom! It looks at the session, finds the <code>user_token</code>,
         looks up the user in the DB, and assigns it to
@@ -859,20 +864,34 @@
     <h3 id="what-is-live_session">What is <code>live_session</code>?</h3>
     <p>This is crucial for LiveView. When you navigate between pages in a
       <code>live_session</code>, the connection <strong>stays open</strong>.
-      It’s super fast.
+      It's super fast.
     </p>
     <ul>
       <li><strong>:public</strong>: Anyone can be here. We run
         <code>:mount_current_user</code> just to check <em>if</em> they are
-        logged in, but we don’t kick them out if they aren’t.
+        logged in, but we don't kick them out if they aren't.
       </li>
       <li><strong>:authenticated</strong>: The Bouncer. We run
-        <code>:ensure_authenticated</code>. If they aren’t logged in, this plug
+        <code>:ensure_authenticated</code>. If they aren't logged in, this plug
         halts the request and redirects them to login.
       </li>
     </ul>
-    <h2 id="the-dead-view-vs.-liveview">The “Dead” View vs. LiveView</h2>
-    <p>You’ll see some routes use <code>get</code> (standard HTTP) and some
+    <h2 id="the-verified-routes-p">The "Verified Routes" (~p)</h2>
+    <p>You might see this weird syntax: <code>~p"/dashboard"</code>. This is
+      a <strong>sigil</strong> (like regex <code>~r/.../</code>). It checks
+      your routes at <strong>compile time</strong>.</p>
+    <ul>
+      <li><strong>Good:</strong> <code>~p"/thumbnails/#{video_id}"</code>
+        -&gt; interpolates the ID and ensures the route exists.</li>
+      <li><strong>Bad:</strong> <code>~p"/thumnails/#{id}"</code> -&gt;
+        <strong>COMPILER ERROR!</strong> (Typo detected).
+      </li>
+    </ul>
+    <p>In React, you often have broken links that you only find when you
+      click them. In Phoenix, if you change a route in <code>router.ex</code>
+      but forget to update a link, the app won't even compile.</p>
+    <h2 id="the-dead-view-vs.-liveview">The "Dead" View vs. LiveView</h2>
+    <p>You'll see some routes use <code>get</code> (standard HTTP) and some
       use <code>live</code> (LiveView).</p>
     <ul>
       <li><strong><code>get "/auth/:provider", AuthController, :request</code></strong>:
@@ -884,7 +903,7 @@
     </ul>
     <h2 id="the-auth-flow-oauth">The Auth Flow (OAuth)</h2>
     <ol type="1">
-      <li>User clicks “Login with Google”.</li>
+      <li>User clicks "Login with Google".</li>
       <li>Router hits <code>AuthController.request</code> -&gt; redirects to
         Google.</li>
       <li>Google redirects back to <code>AuthController.callback</code>.</li>
@@ -904,7 +923,7 @@
       (LiveView Basics)</h1>
     <p>This is the main event. LiveView allows you to write interactive UI
       (like React) entirely in Elixir.</p>
-    <p>Let’s dissect
+    <p>Let's dissect
       <code>lib/cuetube_web/live/dashboard_live.ex</code>.
     </p>
     <h2 id="the-connection-lifecycle">The Connection Lifecycle</h2>
@@ -929,7 +948,7 @@
         <code>this.state</code> or <code>useState</code>).
       </li>
       <li><strong><code>assign(socket, key: value)</code></strong>: This sets
-        state. Here we fetch the user’s playlists and store them in the
+        state. Here we fetch the user's playlists and store them in the
         socket.</li>
     </ul>
     <h3 id="renderassigns">2. <code>render(assigns)</code></h3>
@@ -977,7 +996,7 @@
         end</code></pre>
     <ol type="1">
       <li>User clicks.</li>
-      <li>“delete_playlist” is sent over the WebSocket.</li>
+      <li>"delete_playlist" is sent over the WebSocket.</li>
       <li><code>handle_event</code> runs on the server.</li>
       <li>We delete the item in the DB.</li>
       <li>We update the <code>socket</code> with the new list.</li>
@@ -986,12 +1005,12 @@
         DOM updates.</li>
     </ol>
     <h2 id="no-api-needed">No API Needed</h2>
-    <p>Notice what we didn’t do?</p>
+    <p>Notice what we didn't do?</p>
     <ul>
-      <li>We didn’t write a <code>DELETE /api/playlists/:id</code>
+      <li>We didn't write a <code>DELETE /api/playlists/:id</code>
         endpoint.</li>
-      <li>We didn’t write a <code>fetch()</code> call in JS.</li>
-      <li>We didn’t handle loading states or JSON parsing.</li>
+      <li>We didn't write a <code>fetch()</code> call in JS.</li>
+      <li>We didn't handle loading states or JSON parsing.</li>
     </ul>
     <p>We just changed the server state, and the UI updated.</p>
     <div style="page-break-after: always;">
@@ -1017,7 +1036,7 @@
       (<code>lib/cuetube_web/components/core_components.ex</code>)</h2>
     <p>This file is a goldmine. It contains reusable UI elements like
       <code>input</code>, <code>modal</code>, <code>table</code>, and
-      <code>button</code>. It’s generated by Phoenix but you own it. You can
+      <code>button</code>. It's generated by Phoenix but you own it. You can
       change the Tailwind classes here to change the look of your
       <em>entire</em> app.
     </p>
@@ -1040,9 +1059,9 @@
         end</code></pre>
     <ul>
       <li><strong><code>attr</code></strong>: Defines what props the component
-        accepts. It’s like TypeScript interfaces for your templates.</li>
+        accepts. It's like TypeScript interfaces for your templates.</li>
       <li><strong><code>slot</code></strong>: Where the children go.
-        <code>&lt;.button&gt;Click Me&lt;/.button&gt;</code> -&gt; “Click Me”
+        <code>&lt;.button&gt;Click Me&lt;/.button&gt;</code> -&gt; "Click Me"
         goes into <code>inner_block</code>.
       </li>
     </ul>
@@ -1055,84 +1074,115 @@
     <h2 id="daisyui">DaisyUI</h2>
     <p>Your <code>assets/css/app.scss</code> imports DaisyUI (via the
       config). This gives you classes like <code>btn</code>,
-      <code>card</code>, <code>input</code>. You don’t need to write 50
+      <code>card</code>, <code>input</code>. You don't need to write 50
       utility classes for a button. <code>class="btn btn-primary"</code> does
       the heavy lifting.
     </p>
     <h2 id="layouts">Layouts</h2>
-    <code>lib/cuetube_web/components/layouts/root.html.heex</code> is the
-    skeleton (
-    <html>
-      ,
+    <p><code>lib/cuetube_web/components/layouts/root.html.heex</code> is the
+      skeleton (<code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>,
+      <code>&lt;body&gt;</code>).
+      <code>lib/cuetube_web/components/layouts/app.html.heex</code> is the
+      wrapper for your main content (Navigation bar, Flash messages).
+    </p>
+    <p>When <code>DashboardLive</code> renders, it's injected
+      <em>inside</em> <code>app.html.heex</code>, which is inside
+      <code>root.html.heex</code>.
+    </p>
+    <div style="page-break-after: always;">
 
-      <head>
-        ,
+    </div>
+    <h1 id="part-6-the-phone-call-external-apis">Part 6: The Phone Call
+      (External APIs)</h1>
+    <p>You mentioned fetching data (YouTube). Let's see how that works in
+      <code>lib/cuetube/youtube/client.ex</code>.
+    </p>
+    <h2 id="the-tool-req">The Tool: <code>Req</code></h2>
+    <p>We use a library called <code>Req</code>. It's the standard HTTP
+      client now. It's high-level and easy to use.</p>
+    <pre class="elixir"><code>def get_playlist_details(playlist_id) do
+        req()
+        |&gt; Req.get(url: &quot;/playlists&quot;, params: [id: playlist_id, part:
+        &quot;snippet&quot;])
+        |&gt; handle_response(...)
+        end</code></pre>
+    <h2 id="pattern-matching-api-responses">Pattern Matching API
+      Responses</h2>
+    <p>One of the coolest things in Elixir is handling JSON responses.</p>
+    <pre class="elixir"><code>defp handle_response(result) do
+        case result do
+        # 1. Success! Pattern match the 200 OK and the body
+        {:ok, %{status: 200, body: body}} -&gt;
+        {:ok, parse_body(body)}
 
-      <body>
-        <p>). <code>lib/cuetube_web/components/layouts/app.html.heex</code> is
-          the wrapper for your main content (Navigation bar, Flash messages).</p>
-        <p>When <code>DashboardLive</code> renders, it’s injected
-          <em>inside</em> <code>app.html.heex</code>, which is inside
-          <code>root.html.heex</code>.
-        </p>
-        <div style="page-break-after: always;">
+        # 2. API Error (404, 500)
+        {:ok, %{status: status}} -&gt;
+        {:error, &quot;YouTube said no: #{status}&quot;}
 
-        </div>
-        <h1 id="part-6-the-phone-call-external-apis">Part 6: The Phone Call
-          (External APIs)</h1>
-        <p>You mentioned fetching data (YouTube). Let’s see how that works in
-          <code>lib/cuetube/youtube/client.ex</code>.
-        </p>
-        <h2 id="the-tool-req">The Tool: <code>Req</code></h2>
-        <p>We use a library called <code>Req</code>. It’s the standard HTTP
-          client now. It’s high-level and easy to use.</p>
-        <pre class="elixir"><code>def get_playlist_details(playlist_id) do
-            req()
-            |&gt; Req.get(url: &quot;/playlists&quot;, params: [id: playlist_id, part:
-            &quot;snippet&quot;])
-            |&gt; handle_response(...)
-            end</code></pre>
-        <h2 id="pattern-matching-api-responses">Pattern Matching API
-          Responses</h2>
-        <p>One of the coolest things in Elixir is handling JSON responses.</p>
-        <pre class="elixir"><code>defp handle_response(result) do
-            case result do
-            # 1. Success! Pattern match the 200 OK and the body
-            {:ok, %{status: 200, body: body}} -&gt;
-            {:ok, parse_body(body)}
+        # 3. Network Error (DNS failed, timeout)
+        {:error, reason} -&gt;
+        {:error, &quot;Internet broken: #{inspect(reason)}&quot;}
+        end
+        end</code></pre>
+    <p>This forces you to handle every scenario. You can't accidentally
+      ignore a 404.</p>
+    <h2 id="keeping-secrets">Keeping Secrets</h2>
+    <p>Notice <code>Application.get_env(:cuetube, :youtube_api_key)</code>.
+      We <strong>never</strong> hardcode API keys. They live in
+      <code>config/runtime.exs</code>, which reads them from environment
+      variables (<code>System.get_env("YOUTUBE_API_KEY")</code>).
+    </p>
+    <h2 id="async-tasks-advanced">Async &amp; Tasks (Advanced)</h2>
+    <p>If fetching a playlist takes 5 seconds, you don't want to freeze the
+      user's browser. In LiveView, you can do this:</p>
+    <ol type="1">
+      <li><strong>Mount:</strong> Render the page with a "Loading..."
+        spinner.</li>
+      <li><strong>Async:</strong> Kick off a background task to fetch from
+        YouTube.</li>
+      <li><strong>Receive:</strong> When the task finishes, it sends a message
+        to the LiveView.</li>
+      <li><strong>Update:</strong> The LiveView updates the state with the
+        data and the spinner disappears.</li>
+    </ol>
+    <p>This is powered by the BEAM's lightweight processes. You can spawn
+      thousands of these tasks without sweating.</p>
+    <h2 id="bonus-proxying-images-thumbnailcontroller">Bonus: Proxying
+      Images (<code>ThumbnailController</code>)</h2>
+    <p>Sometimes you need to serve external assets (like YouTube thumbnails)
+      but you want to control caching or avoid mixed-content warnings. You
+      recently added
+      <code>lib/cuetube_web/controllers/thumbnail_controller.ex</code>.
+    </p>
+    <pre class="elixir"><code>def show(conn, %{&quot;video_id&quot; =&gt; video_id}) do
+        url = &quot;https://i.ytimg.com/vi/#{video_id}/hqdefault.jpg&quot;
 
-            # 2. API Error (404, 500)
-            {:ok, %{status: status}} -&gt;
-            {:error, &quot;YouTube said no: #{status}&quot;}
+        case Req.get(url) do
+        {:ok, %{status: 200, body: body, headers: headers}} -&gt;
+        content_type = Map.get(headers, &quot;content-type&quot;) |&gt; List.first()
 
-            # 3. Network Error (DNS failed, timeout)
-            {:error, reason} -&gt;
-            {:error, &quot;Internet broken: #{inspect(reason)}&quot;}
-            end
-            end</code></pre>
-        <p>This forces you to handle every scenario. You can’t accidentally
-          ignore a 404.</p>
-        <h2 id="keeping-secrets">Keeping Secrets</h2>
-        <p>Notice <code>Application.get_env(:cuetube, :youtube_api_key)</code>.
-          We <strong>never</strong> hardcode API keys. They live in
-          <code>config/runtime.exs</code>, which reads them from environment
-          variables (<code>System.get_env("YOUTUBE_API_KEY")</code>).
-        </p>
-        <h2 id="async-tasks-advanced">Async &amp; Tasks (Advanced)</h2>
-        <p>If fetching a playlist takes 5 seconds, you don’t want to freeze the
-          user’s browser. In LiveView, you can do this:</p>
-        <ol type="1">
-          <li><strong>Mount:</strong> Render the page with a “Loading…”
-            spinner.</li>
-          <li><strong>Async:</strong> Kick off a background task to fetch from
-            YouTube.</li>
-          <li><strong>Receive:</strong> When the task finishes, it sends a message
-            to the LiveView.</li>
-          <li><strong>Update:</strong> The LiveView updates the state with the
-            data and the spinner disappears.</li>
-        </ol>
-        <p>This is powered by the BEAM’s lightweight processes. You can spawn
-          thousands of these tasks without sweating.</p>
-      </body>
+        conn
+        |&gt; put_resp_content_type(content_type)
+        |&gt; put_resp_header(&quot;cache-control&quot;, &quot;public, max-age=604800&quot;)
+        |&gt; send_resp(200, body)
 
-    </html>
+        _ -&gt; send_resp(conn, 404, &quot;Not Found&quot;)
+        end
+        end</code></pre>
+    <h3 id="why-use-a-controller-here">Why use a Controller here?</h3>
+    <p>LiveView is great for HTML, but Controllers are still king for
+      <strong>binary data</strong> (images, downloads, APIs). By proxying
+      through <code>Req</code>, we:
+    </p>
+    <ol type="1">
+      <li><strong>Hide the source:</strong> The user sees
+        <code>/thumbnails/xyz</code>, not <code>google.com</code>.
+      </li>
+      <li><strong>Cache it:</strong> We set <code>cache-control</code> to 1
+        week.</li>
+      <li><strong>Prevent Tracking:</strong> Users don't ping YouTube's
+        servers just by loading your dashboard.</li>
+    </ol>
+  </body>
+
+</html>
