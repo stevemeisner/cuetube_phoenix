@@ -84,13 +84,6 @@ The search engine leverages Postgres-specific features:
 
 New to Elixir/Phoenix? We've written a comprehensive 6-part guide analyzing this exact codebase to help React/Node developers make the switch.
 
-- **[Read the Guide Locally (Markdown)](TUTORIAL/README.md)**
-- **[View the Live Guide (HTML)](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/TUTORIAL/Cuetube_The_Phoenix_Guide.html)** (Requires GitHub Pages)
-- _[Source Code for Guide](TUTORIAL/Cuetube_The_Phoenix_Guide.html)_
-
-### How to Enable the Live Guide
-
-1.  Push this code to GitHub.
-2.  Go to **Settings** > **Pages** in the repository.
-3.  Under **Source**, choose **Deploy from a branch** (select `main` or `master`).
-4.  Once deployed, update the link above with your actual username and repo name.
+- **[Read the Guide Locally (Markdown)](docs/README.md)**
+- **[View the Live Guide (HTML)](https://docs.elixir.cuetube.apps)**
+- _[Source Code for Guide](docs/index.html)_
