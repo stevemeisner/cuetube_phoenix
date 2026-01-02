@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'sass:color';
 
 html {
   box-sizing: border-box;
@@ -86,7 +87,7 @@ a {
     color: white;
 
     &:hover {
-      background-color: darken($color-primary, 5%);
+      background-color: color.adjust($color-primary, $lightness: -5%);
     }
   }
 
@@ -95,7 +96,7 @@ a {
     color: $color-primary;
 
     &:hover {
-      background-color: darken($color-primary-soft, 2%);
+      background-color: color.adjust($color-primary-soft, $lightness: -2%);
     }
   }
 
