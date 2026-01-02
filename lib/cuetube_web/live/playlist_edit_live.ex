@@ -147,9 +147,7 @@ defmodule CuetubeWeb.PlaylistEditLive do
     <div class="editor-card">
       <div class="card-preview">
         <img
-          src={
-            @item.thumbnail_url || "https://i.ytimg.com/vi/#{@item.youtube_video_id}/mqdefault.jpg"
-          }
+          src={~p"/thumbnails/#{@item.youtube_video_id}"}
           alt={@item.title}
           class="thumbnail"
         />

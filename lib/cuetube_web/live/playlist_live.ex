@@ -119,10 +119,7 @@ defmodule CuetubeWeb.PlaylistLive do
                   <span class="item-index">{idx + 1}.</span>
                   <div class="item-thumbnail">
                     <img
-                      src={
-                        item.thumbnail_url ||
-                          "https://i.ytimg.com/vi/#{item.youtube_video_id}/mqdefault.jpg"
-                      }
+                      src={~p"/thumbnails/#{item.youtube_video_id}"}
                       loading="lazy"
                     />
                   </div>

@@ -28,6 +28,7 @@ defmodule CuetubeWeb.Router do
     pipe_through :browser
 
     get "/avatar/:handle", AvatarController, :show
+    get "/thumbnails/:video_id", ThumbnailController, :show
 
     live_session :public, on_mount: [{CuetubeWeb.UserAuth, :mount_current_user}] do
       live "/", HomeLive
