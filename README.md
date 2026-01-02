@@ -85,5 +85,5 @@ The search engine leverages Postgres-specific features:
 New to Elixir/Phoenix? We've written a comprehensive 6-part guide analyzing this exact codebase to help React/Node developers make the switch.
 
 - **[Read the Guide Locally (Markdown)](docs/README.md)**
-- **[View the Live Guide (HTML)](https://docs.elixir.cuetube.apps)**
+- **[View the Live Guide (HTML)](https://docs.elixir.cuetube.app/)**
 - _[Source Code for Guide](docs/index.html)_
