@@ -1,6 +1,5 @@
 defmodule CuetubeWeb.PlaylistLive do
   use CuetubeWeb, :live_view
-  import CuetubeWeb.PlaylistComponents
   alias Cuetube.Library
 
   @impl true
@@ -35,9 +34,6 @@ defmodule CuetubeWeb.PlaylistLive do
     <Layouts.app flash={@flash} current_user={@current_user}>
       <div class="playlist-view container">
         <header class="section-header playlist-header">
-          <div class="header-collage">
-            <.playlist_collage playlist={@playlist} />
-          </div>
           <div class="header-main">
             <div class="header-top">
               <div class="curator-info">

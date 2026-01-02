@@ -9,13 +9,12 @@
   margin-bottom: $space-xl;
   border-bottom: 1px solid $color-border;
   padding-bottom: $space-lg;
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: $space-xl;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+  // With the collage gone, we don't need grid/columns
+  // display: grid;
+  // grid-template-columns: 240px 1fr;
+  // gap: $space-xl;
+  display: block;
 }
 
 .header-collage {
