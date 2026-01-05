@@ -139,16 +139,12 @@ defmodule CuetubeWeb.HomeLive do
   # Event handlers (similar to SearchLive)
   @impl true
   def handle_event("suggest", %{"query" => query}, socket) do
-    IO.inspect(query, label: "SUGGEST EVENT")
+    # Only update autocomplete suggestions as user types, not the full results
     suggestions = if String.length(query) >= 2, do: Search.get_suggestions(query), else: []
-    IO.inspect(length(suggestions), label: "SUGGESTIONS FOUND")
-
-    # Update results as well for the real-time preview grid
-    results = if String.length(query) >= 3, do: Search.search_playlists(query, 6), else: []
 
     {:noreply,
      socket
-     |> assign(query: query, suggestions: suggestions, results: results)}
+     |> assign(query: query, suggestions: suggestions)}
   end
 
   @impl true

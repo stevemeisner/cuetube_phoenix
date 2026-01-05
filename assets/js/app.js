@@ -48,6 +48,7 @@ window.addEventListener('phx:page-loading-stop', (_info) => {
 
 // Smart connection error handling - only show errors for real, sustained connection issues
 let hasConnectedBefore = false
+let isNavigating = false
 let errorDisplayTimeout = null
 
 // Track when we've successfully connected
@@ -79,6 +80,11 @@ window.addEventListener('phx:disconnected', () => {
     return
   }
 
+  // Don't show errors during navigation (expected disconnects)
+  if (isNavigating) {
+    return
+  }
+
   // Clear any existing timeout
   if (errorDisplayTimeout) {
     clearTimeout(errorDisplayTimeout)
@@ -96,8 +102,10 @@ window.addEventListener('phx:disconnected', () => {
   }, 300)
 })
 
-// Reset connection state on page navigation to prevent errors during route changes
+// Track navigation start - don't show errors during navigation
 window.addEventListener('phx:page-loading-start', () => {
+  isNavigating = true
+
   // Clear any pending error display during navigation
   if (errorDisplayTimeout) {
     clearTimeout(errorDisplayTimeout)
@@ -114,6 +122,14 @@ window.addEventListener('phx:page-loading-start', () => {
   if (serverError && !serverError.hasAttribute('hidden')) {
     serverError.setAttribute('hidden', '')
   }
+})
+
+// Track navigation end - allow showing errors again after navigation completes
+window.addEventListener('phx:page-loading-stop', () => {
+  // Small delay to allow the new page to fully connect
+  setTimeout(() => {
+    isNavigating = false
+  }, 100)
 })
 
 // connect if there are any LiveViews on the page
