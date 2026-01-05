@@ -50,7 +50,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "cuetube.onrender.com"
+  host = System.get_env("PHX_HOST") || "elixir.cuetube.app"
 
   config :cuetube, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
@@ -63,7 +63,12 @@ if config_env() == :prod do
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0}
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    check_origin: [
+      "https://#{host}",
+      "https://elixir.cuetube.app",
+      "https://cuetube.onrender.com"
+    ]
 
   # ## SSL Support
   #
