@@ -51,6 +51,32 @@ let hasConnectedBefore = false
 let isNavigating = false
 let errorDisplayTimeout = null
 
+// Helper function to hide both error messages
+function hideConnectionErrors() {
+  const clientError = document.querySelector('#client-error')
+  const serverError = document.querySelector('#server-error')
+
+  if (clientError) {
+    clientError.setAttribute('hidden', '')
+  }
+  if (serverError) {
+    serverError.setAttribute('hidden', '')
+  }
+}
+
+// Ensure errors are hidden on page load
+document.addEventListener('DOMContentLoaded', () => {
+  hideConnectionErrors()
+})
+
+// Also hide immediately if DOM is already loaded
+if (document.readyState === 'loading') {
+  // DOMContentLoaded has not fired yet
+} else {
+  // DOMContentLoaded already fired
+  hideConnectionErrors()
+}
+
 // Track when we've successfully connected
 window.addEventListener('phx:connected', () => {
   hasConnectedBefore = true
@@ -62,15 +88,7 @@ window.addEventListener('phx:connected', () => {
   }
 
   // Hide any currently displayed errors
-  const clientError = document.querySelector('#client-error')
-  const serverError = document.querySelector('#server-error')
-
-  if (clientError && !clientError.hasAttribute('hidden')) {
-    clientError.setAttribute('hidden', '')
-  }
-  if (serverError && !serverError.hasAttribute('hidden')) {
-    serverError.setAttribute('hidden', '')
-  }
+  hideConnectionErrors()
 })
 
 // Handle disconnection with delay to filter out transient disconnects
@@ -113,15 +131,7 @@ window.addEventListener('phx:page-loading-start', () => {
   }
 
   // Hide errors during navigation
-  const clientError = document.querySelector('#client-error')
-  const serverError = document.querySelector('#server-error')
-
-  if (clientError && !clientError.hasAttribute('hidden')) {
-    clientError.setAttribute('hidden', '')
-  }
-  if (serverError && !serverError.hasAttribute('hidden')) {
-    serverError.setAttribute('hidden', '')
-  }
+  hideConnectionErrors()
 })
 
 // Track navigation end - allow showing errors again after navigation completes

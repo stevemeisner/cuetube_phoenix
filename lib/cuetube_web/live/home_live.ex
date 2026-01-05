@@ -15,6 +15,7 @@ defmodule CuetubeWeb.HomeLive do
        results: [],
        latest_playlists: latest_playlists,
        loading: false,
+       searched: false,
        page_title: "Curate & Contextualize"
      )}
   end
@@ -25,9 +26,9 @@ defmodule CuetubeWeb.HomeLive do
 
     if query != "" do
       results = Search.search_playlists(query, 6)
-      {:noreply, assign(socket, query: query, results: results, suggestions: [])}
+      {:noreply, assign(socket, query: query, results: results, suggestions: [], searched: true)}
     else
-      {:noreply, assign(socket, query: "", results: [], suggestions: [])}
+      {:noreply, assign(socket, query: "", results: [], suggestions: [], searched: false)}
     end
   end
 
@@ -100,7 +101,7 @@ defmodule CuetubeWeb.HomeLive do
           </div>
         </section>
 
-        <section :if={@query != ""} class="search-results-preview-section container">
+        <section :if={@searched} class="search-results-preview-section container">
           <div class="search-status" role="status" aria-live="polite">
             <%= if @results != [] do %>
               {length(@results)} results for "{@query}".

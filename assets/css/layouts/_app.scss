@@ -28,6 +28,10 @@
   margin-bottom: $space-sm;
   animation: slideIn 0.3s ease-out;
 
+  &[hidden] {
+    display: none;
+  }
+
   &.flash-info {
     background-color: #f0fdf4; // slate-50 green
     color: $color-success;
