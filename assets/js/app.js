@@ -46,48 +46,73 @@ window.addEventListener('phx:page-loading-stop', (_info) => {
   }
 })
 
-// Track initial LiveView connection state to suppress false error messages during page load
-let initialConnectionTimeout = null
-document.body.dataset.lvInitialConnection = 'pending'
+// Smart connection error handling - only show errors for real, sustained connection issues
+let hasConnectedBefore = false
+let errorDisplayTimeout = null
 
-// Set timeout for initial connection (4 seconds)
-initialConnectionTimeout = setTimeout(() => {
-  if (document.body.dataset.lvInitialConnection === 'pending') {
-    document.body.dataset.lvInitialConnection = 'failed'
-  }
-}, 4000)
-
-// Track successful connection
+// Track when we've successfully connected
 window.addEventListener('phx:connected', () => {
-  if (document.body.dataset.lvInitialConnection === 'pending') {
-    document.body.dataset.lvInitialConnection = 'connected'
-    if (initialConnectionTimeout) {
-      clearTimeout(initialConnectionTimeout)
-      initialConnectionTimeout = null
-    }
+  hasConnectedBefore = true
+
+  // Clear any pending error display
+  if (errorDisplayTimeout) {
+    clearTimeout(errorDisplayTimeout)
+    errorDisplayTimeout = null
+  }
+
+  // Hide any currently displayed errors
+  const clientError = document.querySelector('#client-error')
+  const serverError = document.querySelector('#server-error')
+
+  if (clientError && !clientError.hasAttribute('hidden')) {
+    clientError.setAttribute('hidden', '')
+  }
+  if (serverError && !serverError.hasAttribute('hidden')) {
+    serverError.setAttribute('hidden', '')
   }
 })
 
-// Helper function to check if error should be shown
-window.shouldShowConnectionError = function () {
-  const state = document.body.dataset.lvInitialConnection
-  // Show error if we've connected before (real disconnection) or if initial connection failed
-  return state === 'connected' || state === 'failed'
-}
-
-// Listen for phx:disconnected events and conditionally hide errors if still in initial connection window
+// Handle disconnection with delay to filter out transient disconnects
 window.addEventListener('phx:disconnected', () => {
-  // If we're still in the initial connection window, hide any error messages that were shown
-  if (document.body.dataset.lvInitialConnection === 'pending') {
-    const clientError = document.querySelector('#client-error')
-    const serverError = document.querySelector('#server-error')
+  // Don't show errors before first connection (initial page load)
+  if (!hasConnectedBefore) {
+    return
+  }
 
-    if (clientError && !clientError.hasAttribute('hidden')) {
-      clientError.setAttribute('hidden', '')
+  // Clear any existing timeout
+  if (errorDisplayTimeout) {
+    clearTimeout(errorDisplayTimeout)
+  }
+
+  // Wait 300ms before showing error - if connection is restored quickly, this gets cancelled
+  errorDisplayTimeout = setTimeout(() => {
+    const clientError = document.querySelector('#client-error')
+
+    if (clientError) {
+      clientError.removeAttribute('hidden')
     }
-    if (serverError && !serverError.hasAttribute('hidden')) {
-      serverError.setAttribute('hidden', '')
-    }
+
+    errorDisplayTimeout = null
+  }, 300)
+})
+
+// Reset connection state on page navigation to prevent errors during route changes
+window.addEventListener('phx:page-loading-start', () => {
+  // Clear any pending error display during navigation
+  if (errorDisplayTimeout) {
+    clearTimeout(errorDisplayTimeout)
+    errorDisplayTimeout = null
+  }
+
+  // Hide errors during navigation
+  const clientError = document.querySelector('#client-error')
+  const serverError = document.querySelector('#server-error')
+
+  if (clientError && !clientError.hasAttribute('hidden')) {
+    clientError.setAttribute('hidden', '')
+  }
+  if (serverError && !serverError.hasAttribute('hidden')) {
+    serverError.setAttribute('hidden', '')
   }
 })
 
